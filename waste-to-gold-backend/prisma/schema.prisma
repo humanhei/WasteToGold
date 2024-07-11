@@ -1,0 +1,85 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider        = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Define your models here
+model User {
+  id          String  @id @default(uuid())
+  email       String  @unique
+  username    String @unique
+  phone       Int @unique
+  sells       Sell[]
+  followedBy  User[]    @relation("UserFollows")
+  following   User[]    @relation("UserFollows")
+  requests    Request[]
+  createdAt   DateTime?  @default(now())
+  updateAt    DateTime?  @updatedAt
+}
+
+
+model Category {
+  id            String  @id @default(uuid())
+  name_en       String  @unique
+  name_zh       String  @unique
+  sells         Sell[]
+  requests      Request[]
+  subCategories SubCategory[]
+}
+
+model SubCategory {
+  id          String    @id @default(uuid())
+  name_en     String    @unique
+  name_zh     String    @unique
+  category    Category  @relation(fields: [categoryId], references: [id])
+  categoryId  String
+}
+
+model Sell {
+  id          String      @id @default(uuid())
+  title_en    String?
+  title_zh    String?
+  category    Category    @relation(fields: [categoryId], references: [id])
+  categoryId  String      
+  condition   String?
+  brand       String?
+  description String?
+  free        Boolean     @default(false)
+  price       Decimal
+  reviews     Review[]
+  createdAt   DateTime?   @default(now())
+  updateAt    DateTime?   @updatedAt
+  author      User        @relation(fields: [authorId], references: [id])
+  authorId    String
+}
+
+model Request {
+  id          String     @id @default(uuid())
+  title_en    String?
+  title_zh    String?
+  category    Category   @relation(fields: [categoryId], references: [id])
+  categoryId  String     
+  location    String?
+  createdAt   DateTime?  @default(now())
+  updateAt    DateTime?  @updatedAt
+  author      User       @relation(fields: [authorId], references: [id])
+  authorId    String
+}
+
+model Review {
+  id          String  @id @default(uuid())
+  rating      String?
+  review      String?
+  sell        Sell    @relation(fields: [sellId], references: [id])
+  sellId      String
+}
