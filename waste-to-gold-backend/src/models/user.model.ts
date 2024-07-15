@@ -8,6 +8,12 @@ export interface User {
 }
 
 export const UserModel = {
-  findMany: () => prisma.user.findMany(),
+  findMany: () => prisma.user.findMany({
+    include: {
+    'listings': true,
+    'followedBy': true,
+    'following': true,
+    'reviews': true
+  }}),
   create: (data: { email: string; username: string, phone: number }) => prisma.user.create({ data }),
 }
