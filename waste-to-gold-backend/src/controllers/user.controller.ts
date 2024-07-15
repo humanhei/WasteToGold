@@ -17,9 +17,7 @@ export const UserController = {
       const user = await UserService.createUser(email, username, phone, password)
       res.status(201).json(user)
     } catch (error) {
-      if (error instanceof Error) {
-        res.status(500).send({ errors: [{ message: error.message }] });
-      }
+      res.status(500).send({ errors: [{ message: "Something went wrong" }] });
     }
   },
 }

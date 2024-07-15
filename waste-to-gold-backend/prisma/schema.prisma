@@ -19,11 +19,10 @@ model User {
   email       String  @unique
   username    String @unique
   phone       Int @unique
-  listings    Listing[]
+  sells       Sell[]
   followedBy  User[]    @relation("UserFollows")
   following   User[]    @relation("UserFollows")
-  reviews     Review[]
-  status      String     @default("ACTIVE")
+  requests    Request[]
   createdAt   DateTime?  @default(now())
   updateAt    DateTime?  @updatedAt
 }
@@ -33,9 +32,9 @@ model Category {
   id            String  @id @default(uuid())
   name_en       String  @unique
   name_zh       String  @unique
-  listings      Listing[]
+  sells         Sell[]
+  requests      Request[]
   subCategories SubCategory[]
-  status        String     @default("ACTIVE")
 }
 
 model SubCategory {
@@ -44,27 +43,36 @@ model SubCategory {
   name_zh     String    @unique
   category    Category  @relation(fields: [categoryId], references: [id])
   categoryId  String
-  status      String     @default("ACTIVE")
 }
 
-model Listing {
+model Sell {
   id          String      @id @default(uuid())
-  sell        Boolean     @default(true)
   title_en    String?
   title_zh    String?
-  category    Category?   @relation(fields: [categoryId], references: [id])
-  categoryId  String?
+  category    Category    @relation(fields: [categoryId], references: [id])
+  categoryId  String      
   condition   String?
   brand       String?
   description String?
   free        Boolean     @default(false)
-  price       Decimal?
-  photos      Photo[]
+  price       Decimal
   reviews     Review[]
-  status      String     @default("ACTIVE")
   createdAt   DateTime?   @default(now())
   updateAt    DateTime?   @updatedAt
   author      User        @relation(fields: [authorId], references: [id])
+  authorId    String
+}
+
+model Request {
+  id          String     @id @default(uuid())
+  title_en    String?
+  title_zh    String?
+  category    Category   @relation(fields: [categoryId], references: [id])
+  categoryId  String     
+  location    String?
+  createdAt   DateTime?  @default(now())
+  updateAt    DateTime?  @updatedAt
+  author      User       @relation(fields: [authorId], references: [id])
   authorId    String
 }
 
@@ -72,22 +80,6 @@ model Review {
   id          String  @id @default(uuid())
   rating      String?
   review      String?
-  listing     Listing    @relation(fields: [listingId], references: [id])
-  listingId   String
-  status      String     @default("ACTIVE")
-  author      User        @relation(fields: [authorId], references: [id])
-  authorId    String
-}
-
-model Photo {
-  id            Int         @id @default(autoincrement())
-  fileName      String
-  originalName  String
-  s3Url         String
-  mimeType      String
-  listing       Listing     @relation(fields: [listingId], references: [id])
-  listingId     String
-  status        String     @default("ACTIVE")
-  createdAt     DateTime    @default(now())
-  updatedAt     DateTime    @updatedAt
+  sell        Sell    @relation(fields: [sellId], references: [id])
+  sellId      String
 }

@@ -22,28 +22,4 @@ export const CategoryController = {
       }
     }
   },
-
-  updateCategory: async (req: Request, res: Response) => {
-    const { categoryId, name_en, name_zh } = req.body
-    try {
-      const category = await CategoryService.updateCategory(categoryId, name_en, name_zh)
-      res.status(201).json(category)
-    } catch (error) {
-      if (error instanceof Error) {
-        res.status(500).send({ errors: [{ message: error.message }] });
-      }
-    }
-  },
-
-  deleteCategory: async (req: Request, res: Response) => {
-    const { categoryId } = req.params
-    try {
-      const category = await CategoryService.deleteCategory(categoryId)
-      res.status(201).json(category)
-    } catch (error) {
-      if (error instanceof Error) {
-        res.status(500).send({ errors: [{ message: error.message }] });
-      }
-    }
-  },
 }
