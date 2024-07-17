@@ -1,6 +1,6 @@
 import prisma from '../prisma'
 
-export interface ListingCreateEditModel {
+export interface ListingCreateModel {
   sell: boolean,
   title_en: string,
   title_zh: string,
@@ -13,6 +13,19 @@ export interface ListingCreateEditModel {
   authorId: string
 }
 
+export interface ListingEditModel {
+  sell?: boolean,
+  title_en?: string,
+  title_zh?: string,
+  categoryId?: string,
+  condition?: string,
+  brand?: string,
+  description?: string,
+  free?: boolean,
+  price?: number,
+  authorId?: string
+}
+
 export const ListingModel = {
   findMany: () => prisma.listing.findMany({
     include: {
@@ -20,8 +33,8 @@ export const ListingModel = {
       reviews: true,
     }
   }),
-  create: (data: ListingCreateEditModel) => prisma.listing.create({ data }),
-  update: (listingId: string, data: ListingCreateEditModel) => prisma.listing.update({
+  create: (data: ListingCreateModel) => prisma.listing.create({ data }),
+  update: (listingId: string, data: ListingEditModel) => prisma.listing.update({
     where: {
       id: listingId,
     },

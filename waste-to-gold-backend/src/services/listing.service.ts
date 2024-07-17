@@ -1,5 +1,5 @@
 import { ListingId } from 'aws-sdk/clients/datazone'
-import { ListingModel, ListingCreateEditModel } from '../models/listing.model'
+import { ListingModel, ListingCreateModel, ListingEditModel } from '../models/listing.model'
 import { Listing, Prisma } from '@prisma/client'
 
 export const ListingService = {
@@ -7,12 +7,12 @@ export const ListingService = {
     return ListingModel.findMany()
   },
 
-  createListing: async (listingModel: ListingCreateEditModel): Promise<Listing> => {
+  createListing: async (listingModel: ListingCreateModel): Promise<Listing> => {
     const listing = await ListingModel.create(listingModel)
     return listing
   },
 
-  updateListing: async (listingId:string, listingModel: ListingCreateEditModel): Promise<Listing> => {
+  updateListing: async (listingId:string, listingModel: ListingEditModel): Promise<Listing> => {
     const listing = await ListingModel.update(listingId, listingModel)
     return listing
   },
