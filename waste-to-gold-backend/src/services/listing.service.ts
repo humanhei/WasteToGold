@@ -17,8 +17,8 @@ export const ListingService = {
     return listing
   },
 
-  deleteListing: async (categoryId:string): Promise<Listing> => {
-    const listing = await ListingModel.delete(categoryId)
+  deleteListing: async (listingId:string): Promise<Listing> => {
+    const listing = await ListingModel.delete(listingId)
     return listing
   },
 }

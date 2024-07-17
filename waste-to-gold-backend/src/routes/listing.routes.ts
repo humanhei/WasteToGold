@@ -5,7 +5,7 @@ const router = express.Router()
 
 router.get('/', ListingController.getAllListings)
 router.post('/', ListingController.createListing)
-router.post('/:categoryId', ListingController.updateListing)
-router.delete('/:categoryId', ListingController.deleteListing)
+router.post('/:listingId', ListingController.updateListing)
+router.delete('/:listingId', ListingController.deleteListing)
 
 export default router

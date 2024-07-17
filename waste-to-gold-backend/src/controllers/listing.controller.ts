@@ -81,9 +81,9 @@ export const ListingController = {
   },
 
   deleteListing: async (req: Request, res: Response) => {
-    const { categoryId } = req.params
+    const { listingId } = req.params
     try {
-      const listing = await ListingService.deleteListing(categoryId)
+      const listing = await ListingService.deleteListing(listingId)
       res.status(201).json(listing)
     } catch (error) {
       if (error instanceof Error) {
