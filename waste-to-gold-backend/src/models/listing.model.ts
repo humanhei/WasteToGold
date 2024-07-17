@@ -14,7 +14,12 @@ export interface ListingCreateEditModel {
 }
 
 export const ListingModel = {
-  findMany: () => prisma.listing.findMany(),
+  findMany: () => prisma.listing.findMany({
+    include: {
+      photos: true,
+      reviews: true,
+    }
+  }),
   create: (data: ListingCreateEditModel) => prisma.listing.create({ data }),
   update: (listingId: string, data: ListingCreateEditModel) => prisma.listing.update({
     where: {
