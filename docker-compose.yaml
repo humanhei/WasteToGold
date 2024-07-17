@@ -15,8 +15,8 @@ services:
       - SUPABASE_ANON_KEY=${SUPABASE_ANON_KEY}
       - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
       - AWS_SECRET_ACCESS_KEY=${AWS_ACCESS_KEY_ID}
-      - AWS_REGION=${AWS_ACCESS_KEY_ID}
-      - S3_BUCKET_NAME=${AWS_ACCESS_KEY_ID}
+      - AWS_REGION=${AWS_REGION}
+      - S3_BUCKET_NAME=${S3_BUCKET_NAME}
     depends_on:
       db:
         # Disable this if you are using an external Postgres database
