@@ -6,6 +6,10 @@ export const UserService = {
     return UserModel.findMany()
   },
 
+  getUserById: async (userId: string): Promise<User|null> => {
+    return UserModel.getUserById(userId);
+  },
+
   createUser: async (email: string, username: string, phone: number, password: string): Promise<User> => {
     const user = await UserModel.create({ email, username, phone })
 

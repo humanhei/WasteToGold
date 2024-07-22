@@ -20,6 +20,7 @@ model User {
   username    String @unique
   phone       Int @unique
   listings    Listing[]
+  wishList    Listing[] @relation("UserWishlist")
   followedBy  User[]    @relation("UserFollows")
   following   User[]    @relation("UserFollows")
   reviews     Review[]
@@ -64,6 +65,7 @@ model Listing {
   status      String     @default("ACTIVE")
   createdAt   DateTime?   @default(now())
   updateAt    DateTime?   @updatedAt
+  wishList    User[] @relation("UserWishlist")
   author      User        @relation(fields: [authorId], references: [id])
   authorId    String
 }

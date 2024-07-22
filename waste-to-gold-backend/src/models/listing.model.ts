@@ -33,6 +33,7 @@ export const ListingModel = {
       author: true,
       photos: true,
       reviews: true,
+      wishList: true,
     }
   }),
   create: (data: ListingCreateModel) => prisma.listing.create({ data }),
@@ -43,6 +44,27 @@ export const ListingModel = {
     data
   }),
   getListing: () => prisma.listing.findMany(),
-  getListingById: (listingId: string) => prisma.listing.findFirst({ where: { id: listingId } }),
-  delete: (listingId: string) => prisma.listing.delete({ where: { id: listingId }})
+  getListingById: (listingId: string) => prisma.listing.findFirst({
+    where: { id: listingId },
+    include: {
+      category: true,
+      author: true,
+      photos: true,
+      reviews: true,
+      wishList: true,
+    }
+  }),
+  delete: (listingId: string) => prisma.listing.delete({ where: { id: listingId }}),
+  addWishlist: (listingId: string, userId: string) => prisma.listing.update({
+    where: { id: listingId },
+    data: {
+      wishList: { connect: [{ id: userId }]}
+    }
+  }),
+  removeWishlist: (listingId: string, userId: string) => prisma.listing.update({
+    where: { id: listingId },
+    data: {
+      wishList: { disconnect: [{ id: userId }]}
+    }
+  }),
 }

@@ -11,6 +11,16 @@ export const UserController = {
     }
   },
 
+  getUserById: async (req: Request, res: Response) => {
+    const { userId } = req.params;
+    try {
+      const user = await UserService.getUserById(userId);
+      res.json(user)
+    } catch (error) {
+      res.status(500).json({ error: 'Failed to retrieve user' })
+    }
+  },
+
   createUser: async (req: Request, res: Response) => {
     const { email, username, phone, password } = req.body
     try {

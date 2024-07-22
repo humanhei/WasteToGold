@@ -6,6 +6,8 @@ const router = express.Router()
 router.get('/', ListingController.getAllListings)
 router.post('/', ListingController.createListing)
 router.post('/:listingId', ListingController.updateListing)
+router.post('/:listingId/addwishlist/:userId', ListingController.addWishlist)
+router.post('/:listingId/removewishlist/:userId', ListingController.removeWishlist)
 router.delete('/:listingId', ListingController.deleteListing)
 
 export default router
