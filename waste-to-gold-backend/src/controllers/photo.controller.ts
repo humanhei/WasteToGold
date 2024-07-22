@@ -4,22 +4,27 @@ import * as s3Service from '../services/s3.service';
 
 export async function uploadPhoto(req: Request, res: Response) {
   try {
-    const file = req.file as Express.Multer.File;
+    const files = req.files as Array<Express.Multer.File>;
     const { listingId } = req.params;
+    const photos = []
     
-    // Upload to S3
-    const s3Result = await s3Service.uploadToS3(file);
+    for (const file of files) {
+      // Upload to S3
+      const s3Result = await s3Service.uploadToS3(file);
 
-    // Store metadata in database
-    const photo = await photoModel.createPhoto({
-      fileName: s3Result.Key,
-      originalName: file.originalname,
-      s3Url: s3Result.Location,
-      mimeType: file.mimetype,
-      listingId: listingId,
-    });
+      // Store metadata in database
+      const photo = await photoModel.createPhoto({
+        fileName: s3Result.Key,
+        originalName: file.originalname,
+        s3Url: s3Result.Location,
+        mimeType: file.mimetype,
+        listingId: listingId,
+      });
 
-    res.json({ message: 'Photo uploaded successfully', data: photo });
+      photos.push(photo);
+    }
+
+    res.json({ message: 'Photo uploaded successfully', data: photos });
   } catch (error) {
     console.error('Error uploading photo:', error);
     res.status(500).json({ error: 'Failed to upload photo' });
