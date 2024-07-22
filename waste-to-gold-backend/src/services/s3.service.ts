@@ -1,14 +1,16 @@
-import AWS from 'aws-sdk';
+import S3 from 'aws-sdk/clients/s3';
 
-const s3 = new AWS.S3({
+const s3 = new S3({
   accessKeyId: process.env.AWS_ACCESS_KEY_ID,
   secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-  region: process.env.AWS_REGION
+  region: process.env.AWS_REGION,
+  signatureVersion: 'v4'
 });
 
-export async function uploadToS3(file: Express.Multer.File): Promise<AWS.S3.ManagedUpload.SendData> {
+export async function uploadToS3(file: Express.Multer.File): Promise<S3.ManagedUpload.SendData> {
   const fileName = `${Date.now()}-${file.originalname}`;
-  const s3Params: AWS.S3.PutObjectRequest = {
+  const s3Params: S3.PutObjectRequest = {
+    ACL: 'public-read',
     Bucket: process.env.S3_BUCKET_NAME!,
     Key: fileName,
     Body: file.buffer,

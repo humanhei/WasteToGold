@@ -29,6 +29,8 @@ export interface ListingEditModel {
 export const ListingModel = {
   findMany: () => prisma.listing.findMany({
     include: {
+      category: true,
+      author: true,
       photos: true,
       reviews: true,
     }
