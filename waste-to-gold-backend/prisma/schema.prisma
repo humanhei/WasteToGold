@@ -71,12 +71,12 @@ model Listing {
 }
 
 model Review {
-  id          String  @id @default(uuid())
+  id          String      @id @default(uuid())
   rating      String?
   review      String?
-  listing     Listing    @relation(fields: [listingId], references: [id])
+  listing     Listing     @relation(fields: [listingId], references: [id])
   listingId   String
-  status      String     @default("ACTIVE")
+  status      String      @default("ACTIVE")
   author      User        @relation(fields: [authorId], references: [id])
   authorId    String
 }

@@ -26,15 +26,17 @@ export interface ListingEditModel {
   authorId?: string
 }
 
+const listingIncludes = {
+  category: true,
+  author: true,
+  photos: true,
+  reviews: true,
+  wishList: true,
+}
+
 export const ListingModel = {
   findMany: () => prisma.listing.findMany({
-    include: {
-      category: true,
-      author: true,
-      photos: true,
-      reviews: true,
-      wishList: true,
-    }
+    include: listingIncludes
   }),
   create: (data: ListingCreateModel) => prisma.listing.create({ data }),
   update: (listingId: string, data: ListingEditModel) => prisma.listing.update({
@@ -46,13 +48,7 @@ export const ListingModel = {
   getListing: () => prisma.listing.findMany(),
   getListingById: (listingId: string) => prisma.listing.findFirst({
     where: { id: listingId },
-    include: {
-      category: true,
-      author: true,
-      photos: true,
-      reviews: true,
-      wishList: true,
-    }
+    include: listingIncludes
   }),
   delete: (listingId: string) => prisma.listing.delete({ where: { id: listingId }}),
   addWishlist: (listingId: string, userId: string) => prisma.listing.update({

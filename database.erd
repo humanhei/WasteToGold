@@ -4,9 +4,9 @@
   "settings": {
     "width": 2000,
     "height": 2000,
-    "scrollTop": 0,
-    "scrollLeft": -569.0003,
-    "zoomLevel": 0.9,
+    "scrollTop": -278.2669,
+    "scrollLeft": -509.2022,
+    "zoomLevel": 1,
     "show": 431,
     "database": 16,
     "databaseName": "WasteToGold",
@@ -501,19 +501,19 @@
         "id": "4i76KfO4dCK_dv9IV3P1D",
         "tableId": "N5kErbQptWQumWq0sB7Pm",
         "name": "title_en",
-        "comment": "Title of selling item",
+        "comment": "English Title of listing",
         "dataType": "varchar",
         "default": "",
         "options": 8,
         "ui": {
           "keys": 0,
           "widthName": 60,
-          "widthComment": 103,
+          "widthComment": 114,
           "widthDataType": 60,
           "widthDefault": 60
         },
         "meta": {
-          "updateAt": 1721029641318,
+          "updateAt": 1722013476012,
           "createAt": 1720128380677
         }
       },
@@ -561,19 +561,19 @@
         "id": "rAxFsk2D3ClcCdfptm-_7",
         "tableId": "N5kErbQptWQumWq0sB7Pm",
         "name": "brand",
-        "comment": "",
+        "comment": "Brand of the item",
         "dataType": "varchar",
         "default": "",
         "options": 0,
         "ui": {
           "keys": 0,
           "widthName": 60,
-          "widthComment": 60,
+          "widthComment": 94,
           "widthDataType": 60,
           "widthDefault": 60
         },
         "meta": {
-          "updateAt": 1720128555475,
+          "updateAt": 1722013443546,
           "createAt": 1720128545081
         }
       },
@@ -581,19 +581,19 @@
         "id": "N73R84uRZ_4XSr4xCGjpF",
         "tableId": "N5kErbQptWQumWq0sB7Pm",
         "name": "description",
-        "comment": "",
+        "comment": "Description of the item",
         "dataType": "varchar",
         "default": "",
         "options": 0,
         "ui": {
           "keys": 0,
           "widthName": 61,
-          "widthComment": 60,
+          "widthComment": 124,
           "widthDataType": 60,
           "widthDefault": 60
         },
         "meta": {
-          "updateAt": 1720128571134,
+          "updateAt": 1722013451461,
           "createAt": 1720128557208
         }
       },
@@ -701,19 +701,19 @@
         "id": "vNuYV2UPdIG8FofLGG8ZI",
         "tableId": "N5kErbQptWQumWq0sB7Pm",
         "name": "title_zh",
-        "comment": "",
+        "comment": "Chinese Title of listing",
         "dataType": "varchar",
         "default": "",
         "options": 0,
         "ui": {
           "keys": 0,
           "widthName": 60,
-          "widthComment": 60,
+          "widthComment": 118,
           "widthDataType": 60,
           "widthDefault": 60
         },
         "meta": {
-          "updateAt": 1721029807888,
+          "updateAt": 1722013467827,
           "createAt": 1721029645184
         }
       },
@@ -721,19 +721,19 @@
         "id": "opViRj0xRGAUaXMJwmQ1i",
         "tableId": "N5kErbQptWQumWq0sB7Pm",
         "name": "sell",
-        "comment": "",
+        "comment": "For Sell or Request",
         "dataType": "boolean",
         "default": "true",
         "options": 8,
         "ui": {
           "keys": 0,
           "widthName": 60,
-          "widthComment": 60,
+          "widthComment": 101,
           "widthDataType": 60,
           "widthDefault": 60
         },
         "meta": {
-          "updateAt": 1721029800486,
+          "updateAt": 1722013433279,
           "createAt": 1721029695917
         }
       },
@@ -1166,7 +1166,7 @@
           "columnIds": [
             "kqhZomGseF29uHLpx8P74"
           ],
-          "x": 845.9999,
+          "x": 850.4999,
           "y": 290.1668,
           "direction": 4
         },
@@ -1213,7 +1213,7 @@
           "columnIds": [
             "qB_YM8ZJEAu8xjtCidO9Z"
           ],
-          "x": 845.9999,
+          "x": 850.4999,
           "y": 610.1668,
           "direction": 8
         },
@@ -1533,7 +1533,7 @@
         "name": 1721029641318,
         "dataType": 1720128429248,
         "options(notNull)": 1720128441455,
-        "comment": 1720128450398
+        "comment": 1722013476011
       }
     ],
     "Ye-3zWlkGzqkMfEE7sVLZ": [
@@ -1571,7 +1571,8 @@
       -1,
       {
         "name": 1720128552400,
-        "dataType": 1720128555475
+        "dataType": 1720128555475,
+        "comment": 1722013443545
       }
     ],
     "N73R84uRZ_4XSr4xCGjpF": [
@@ -1580,7 +1581,8 @@
       -1,
       {
         "name": 1720128567353,
-        "dataType": 1720128571134
+        "dataType": 1720128571134,
+        "comment": 1722013451461
       }
     ],
     "eYn7LktrheXw7dmy3Inc6": [
@@ -1637,7 +1639,8 @@
       {
         "name": 1721029654933,
         "options(notNull)": 1721029675744,
-        "dataType": 1721029807888
+        "dataType": 1721029807888,
+        "comment": 1722013467826
       }
     ],
     "opViRj0xRGAUaXMJwmQ1i": [
@@ -1648,7 +1651,8 @@
         "name": 1721029699730,
         "options(notNull)": 1721029701620,
         "default": 1721029705043,
-        "dataType": 1721029800485
+        "dataType": 1721029800485,
+        "comment": 1722013433278
       }
     ],
     "pGFtxLgXpJCcBp3e5Aubg": [

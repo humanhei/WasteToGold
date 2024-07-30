@@ -6,6 +6,7 @@ import categoryRoutes from './routes/category.routes'
 import subCategoryRoutes from './routes/subCategory.routes'
 import listingRoutes from './routes/listing.routes'
 import photoRoutes from './routes/photo.routes'
+import reviewRoutes from './routes/review.routes'
 
 dotenv.config()
 const prisma = new PrismaClient();
@@ -20,6 +21,7 @@ app.use('/categories', categoryRoutes)
 app.use('/subCategories', subCategoryRoutes)
 app.use('/photos', photoRoutes)
 app.use('/listings', listingRoutes)
+app.use('/reviews', reviewRoutes)
 
 const PORT = process.env.PORT || 3000
 
