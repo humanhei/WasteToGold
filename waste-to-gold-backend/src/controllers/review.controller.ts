@@ -34,8 +34,8 @@ export const ReviewController = {
   createReview: async (req: Request, res: Response) => {
     const { review, rating, listingId, authorId } = req.body
     try {
-      const category = await ReviewService.createReview(review, rating, listingId, authorId)
-      res.status(201).json(category)
+      const reviewObj = await ReviewService.createReview(review, rating, listingId, authorId)
+      res.status(201).json(reviewObj)
     } catch (error) {
       if (error instanceof Error) {
         res.status(500).send({ errors: [{ message: error.message }] });
@@ -47,8 +47,8 @@ export const ReviewController = {
     const { reviewId } = req.params;
     const { review, rating, listingId, authorId } = req.body;
     try {
-      const category = await ReviewService.updateReview(reviewId, review, rating, listingId, authorId)
-      res.status(201).json(category)
+      const reviewObj = await ReviewService.updateReview(reviewId, review, rating, listingId, authorId)
+      res.status(201).json(reviewObj)
     } catch (error) {
       if (error instanceof Error) {
         res.status(500).send({ errors: [{ message: error.message }] });
@@ -59,8 +59,8 @@ export const ReviewController = {
   deleteReview: async (req: Request, res: Response) => {
     const { reviewId } = req.params
     try {
-      const category = await ReviewService.deleteReview(reviewId)
-      res.status(201).json(category)
+      const review = await ReviewService.deleteReview(reviewId)
+      res.status(201).json(review)
     } catch (error) {
       if (error instanceof Error) {
         res.status(500).send({ errors: [{ message: error.message }] });

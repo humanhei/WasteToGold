@@ -22,8 +22,8 @@ export const ReviewModel = {
     },
     include
   }),
-  create: (data: { rating: string, review: string, listingId: string, authorId: string }) => prisma.review.create({ data }),
-  update: (reviewId: string, data: { rating: string, review: string, listingId: string, authorId: string }) => prisma.review.update({
+  create: (data: { rating: number, review: string, listingId: string, authorId: string }) => prisma.review.create({ data }),
+  update: (reviewId: string, data: { rating: number, review: string, listingId: string, authorId: string }) => prisma.review.update({
     where: {
       id: reviewId,
     },

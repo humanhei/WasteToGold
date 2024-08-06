@@ -4,9 +4,9 @@
   "settings": {
     "width": 2000,
     "height": 2000,
-    "scrollTop": -278.2669,
-    "scrollLeft": -509.2022,
-    "zoomLevel": 1,
+    "scrollTop": -197.6736,
+    "scrollLeft": -513.8176,
+    "zoomLevel": 0.8,
     "show": 431,
     "database": 16,
     "databaseName": "WasteToGold",
@@ -1021,8 +1021,8 @@
         "id": "RlDsooDbN7atwRzPZ3zIJ",
         "tableId": "yybLSACvNHx5o4XqWEX0K",
         "name": "rating",
-        "comment": "",
-        "dataType": "varchar",
+        "comment": "1-5 only",
+        "dataType": "int",
         "default": "",
         "options": 0,
         "ui": {
@@ -1033,7 +1033,7 @@
           "widthDefault": 60
         },
         "meta": {
-          "updateAt": 1721030245348,
+          "updateAt": 1722345340867,
           "createAt": 1721030237965
         }
       },
@@ -1841,7 +1841,8 @@
       -1,
       {
         "name": 1721030240815,
-        "dataType": 1721030245344
+        "dataType": 1722345335741,
+        "comment": 1722345340867
       }
     ],
     "yybK_UOkwArml-rLwg6fb": [

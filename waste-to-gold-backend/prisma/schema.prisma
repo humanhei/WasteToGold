@@ -24,6 +24,7 @@ model User {
   followedBy  User[]    @relation("UserFollows")
   following   User[]    @relation("UserFollows")
   reviews     Review[]
+  requests    Request[]
   status      String     @default("ACTIVE")
   createdAt   DateTime?  @default(now())
   updateAt    DateTime?  @updatedAt
@@ -60,25 +61,41 @@ model Listing {
   description String?
   free        Boolean     @default(false)
   price       Decimal?
+  quantity    Int?
+  requests    Request[]
   photos      Photo[]
   reviews     Review[]
-  status      String     @default("ACTIVE")
+  status      String      @default("ACTIVE")
   createdAt   DateTime?   @default(now())
   updateAt    DateTime?   @updatedAt
-  wishList    User[] @relation("UserWishlist")
+  wishList    User[]      @relation("UserWishlist")
   author      User        @relation(fields: [authorId], references: [id])
   authorId    String
 }
 
+model Request {
+  id          String      @id @default(uuid())
+  listing     Listing     @relation(fields: [listingId], references: [id])
+  listingId   String
+  unit        Int         @default(0)
+  status      String      @default("PENDING")
+  author      User        @relation(fields: [authorId], references: [id])
+  authorId    String
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+}
+
 model Review {
   id          String      @id @default(uuid())
-  rating      String?
+  rating      Int?
   review      String?
   listing     Listing     @relation(fields: [listingId], references: [id])
   listingId   String
   status      String      @default("ACTIVE")
   author      User        @relation(fields: [authorId], references: [id])
   authorId    String
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
 }
 
 model Photo {

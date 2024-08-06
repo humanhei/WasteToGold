@@ -213,48 +213,48 @@ services:
       SEED_SELF_HOST: true
 
   # To use S3 backed storage: docker compose -f docker-compose.yml -f docker-compose.s3.yml up
-  # storage:
-  #   container_name: supabase-storage
-  #   image: supabase/storage-api:v1.0.6
-  #   depends_on:
-  #     db:
-  #       # Disable this if you are using an external Postgres database
-  #       condition: service_healthy
-  #     rest:
-  #       condition: service_started
-  #     imgproxy:
-  #       condition: service_started
-  #   healthcheck:
-  #     test:
-  #       [
-  #         "CMD",
-  #         "wget",
-  #         "--no-verbose",
-  #         "--tries=1",
-  #         "--spider",
-  #         "http://localhost:5000/status"
-  #       ]
-  #     timeout: 5s
-  #     interval: 5s
-  #     retries: 3
-  #   restart: unless-stopped
-  #   environment:
-  #     ANON_KEY: ${ANON_KEY}
-  #     SERVICE_KEY: ${SERVICE_ROLE_KEY}
-  #     POSTGREST_URL: http://rest:3000
-  #     PGRST_JWT_SECRET: ${JWT_SECRET}
-  #     DATABASE_URL: postgres://supabase_storage_admin:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}
-  #     FILE_SIZE_LIMIT: 52428800
-  #     STORAGE_BACKEND: file
-  #     FILE_STORAGE_BACKEND_PATH: /var/lib/storage
-  #     TENANT_ID: stub
-  #     # TODO: https://github.com/supabase/storage-api/issues/55
-  #     REGION: stub
-  #     GLOBAL_S3_BUCKET: stub
-  #     ENABLE_IMAGE_TRANSFORMATION: "true"
-  #     IMGPROXY_URL: http://imgproxy:5001
-  #   volumes:
-  #     - ./volumes/storage:/var/lib/storage:z
+  storage:
+    container_name: supabase-storage
+    image: supabase/storage-api:v1.0.6
+    depends_on:
+      db:
+        # Disable this if you are using an external Postgres database
+        condition: service_healthy
+      rest:
+        condition: service_started
+      imgproxy:
+        condition: service_started
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "wget",
+          "--no-verbose",
+          "--tries=1",
+          "--spider",
+          "http://localhost:5000/status"
+        ]
+      timeout: 5s
+      interval: 5s
+      retries: 3
+    restart: unless-stopped
+    environment:
+      ANON_KEY: ${ANON_KEY}
+      SERVICE_KEY: ${SERVICE_ROLE_KEY}
+      POSTGREST_URL: http://rest:3000
+      PGRST_JWT_SECRET: ${JWT_SECRET}
+      DATABASE_URL: postgres://supabase_storage_admin:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}
+      FILE_SIZE_LIMIT: 52428800
+      STORAGE_BACKEND: file
+      FILE_STORAGE_BACKEND_PATH: /var/lib/storage
+      TENANT_ID: stub
+      # TODO: https://github.com/supabase/storage-api/issues/55
+      REGION: stub
+      GLOBAL_S3_BUCKET: stub
+      ENABLE_IMAGE_TRANSFORMATION: "true"
+      IMGPROXY_URL: http://imgproxy:5001
+    volumes:
+      - ./volumes/storage:/var/lib/storage:z
 
   imgproxy:
     container_name: supabase-imgproxy
@@ -290,27 +290,27 @@ services:
       PG_META_DB_USER: supabase_admin
       PG_META_DB_PASSWORD: ${POSTGRES_PASSWORD}
 
-  # functions:
-  #   container_name: supabase-edge-functions
-  #   image: supabase/edge-runtime:v1.54.10
-  #   restart: unless-stopped
-  #   depends_on:
-  #     analytics:
-  #       condition: service_healthy
-  #   environment:
-  #     JWT_SECRET: ${JWT_SECRET}
-  #     SUPABASE_URL: http://kong:8000
-  #     SUPABASE_ANON_KEY: ${ANON_KEY}
-  #     SUPABASE_SERVICE_ROLE_KEY: ${SERVICE_ROLE_KEY}
-  #     SUPABASE_DB_URL: postgresql://postgres:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}
-  #     # TODO: Allow configuring VERIFY_JWT per function. This PR might help: https://github.com/supabase/cli/pull/786
-  #     VERIFY_JWT: "${FUNCTIONS_VERIFY_JWT}"
-  #   volumes:
-  #     - ./volumes/functions:/home/deno/functions:Z
-  #   command:
-  #     - start
-  #     - --main-service
-  #     - /home/deno/functions/main
+  functions:
+    container_name: supabase-edge-functions
+    image: supabase/edge-runtime:v1.54.10
+    restart: unless-stopped
+    depends_on:
+      analytics:
+        condition: service_healthy
+    environment:
+      JWT_SECRET: ${JWT_SECRET}
+      SUPABASE_URL: http://kong:8000
+      SUPABASE_ANON_KEY: ${ANON_KEY}
+      SUPABASE_SERVICE_ROLE_KEY: ${SERVICE_ROLE_KEY}
+      SUPABASE_DB_URL: postgresql://postgres:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}
+      # TODO: Allow configuring VERIFY_JWT per function. This PR might help: https://github.com/supabase/cli/pull/786
+      VERIFY_JWT: "${FUNCTIONS_VERIFY_JWT}"
+    volumes:
+      - ./volumes/functions:/home/deno/functions:Z
+    command:
+      - start
+      - --main-service
+      - /home/deno/functions/main
 
   analytics:
     container_name: supabase-analytics
@@ -363,9 +363,9 @@ services:
       interval: 5s
       timeout: 5s
       retries: 10
-    # depends_on:
-    #   vector:
-    #     condition: service_healthy
+    depends_on:
+      vector:
+        condition: service_healthy
     command:
       - postgres
       - -c
@@ -401,29 +401,29 @@ services:
       # Use named volume to persist pgsodium decryption key between restarts
       - db-config:/etc/postgresql-custom
 
-  # vector:
-  #   container_name: supabase-vector
-  #   image: timberio/vector:0.28.1-alpine
-  #   healthcheck:
-  #     test:
-  #       [
+  vector:
+    container_name: supabase-vector
+    image: timberio/vector:0.28.1-alpine
+    healthcheck:
+      test:
+        [
 
-  #         "CMD",
-  #         "wget",
-  #         "--no-verbose",
-  #         "--tries=1",
-  #         "--spider",
-  #         "http://vector:9001/health"
-  #       ]
-  #     timeout: 5s
-  #     interval: 5s
-  #     retries: 3
-  #   volumes:
-  #     - ./volumes/logs/vector.yml:/etc/vector/vector.yml:ro
-  #     - ${DOCKER_SOCKET_LOCATION}:/var/run/docker.sock:ro
-  #   environment:
-  #     LOGFLARE_API_KEY: ${LOGFLARE_API_KEY}
-  #   command: [ "--config", "etc/vector/vector.yml" ]
+          "CMD",
+          "wget",
+          "--no-verbose",
+          "--tries=1",
+          "--spider",
+          "http://vector:9001/health"
+        ]
+      timeout: 5s
+      interval: 5s
+      retries: 3
+    volumes:
+      - ./volumes/logs/vector.yml:/etc/vector/vector.yml:ro
+      - ${DOCKER_SOCKET_LOCATION}:/var/run/docker.sock:ro
+    environment:
+      LOGFLARE_API_KEY: ${LOGFLARE_API_KEY}
+    command: [ "--config", "etc/vector/vector.yml" ]
 
 volumes:
   db-config:

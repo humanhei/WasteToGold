@@ -21,10 +21,54 @@ export const UserController = {
     }
   },
 
-  createUser: async (req: Request, res: Response) => {
+  getUserByEmail: async (req: Request, res: Response) => {
+    const { email } = req.params;
+    try {
+      const user = await UserService.getUserByEmail(email);
+      res.json(user)
+    } catch (error) {
+      res.status(500).json({ error: 'Failed to retrieve user' })
+    }
+  },
+
+  getUserByPhone: async (req: Request, res: Response) => {
+    const { phone } = req.params;
+    try {
+      const user = await UserService.getUserByPhone(Number(phone));
+      res.json(user)
+    } catch (error) {
+      res.status(500).json({ error: 'Failed to retrieve user' })
+    }
+  },
+
+  logInUser: async (req: Request, res: Response) => {
     const { email, username, phone, password } = req.body
     try {
-      const user = await UserService.createUser(email, username, phone, password)
+      const result = await UserService.logInUser(email, username, phone, password)
+      res.status(201).json(result)
+    } catch (error) {
+      if (error instanceof Error) {
+        res.status(500).send({ errors: [{ message: error.message }] });
+      }
+    }
+  },
+
+  signUpUser: async (req: Request, res: Response) => {
+    const { email, username, phone, password } = req.body
+    try {
+      const result = await UserService.signUpUser(email, username, phone, password)
+      res.status(201).json(result)
+    } catch (error) {
+      if (error instanceof Error) {
+        res.status(500).send({ errors: [{ message: error.message }] });
+      }
+    }
+  },
+
+  createUser: async (req: Request, res: Response) => {
+    const { email, username, phone } = req.body
+    try {
+      const user = await UserService.createUser(email, username, phone)
       res.status(201).json(user)
     } catch (error) {
       if (error instanceof Error) {
