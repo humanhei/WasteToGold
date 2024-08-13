@@ -21,10 +21,10 @@ export const RequestController = {
     }
   },
 
-  getRequestByListingId: async (req: Request, res: Response) => {
+  getRequestsByListingId: async (req: Request, res: Response) => {
     try {
       const { listingId } = req.params;
-      const request = await RequestService.getRequestByListingId(listingId)
+      const request = await RequestService.getRequestsByListingId(listingId)
       res.json(request)
     } catch (error) {
       res.status(500).json({ error: 'Failed to retrieve request' })
@@ -35,6 +35,30 @@ export const RequestController = {
     const { unit, listingId, authorId } = req.body
     try {
       const request = await RequestService.createRequest(unit, listingId, authorId)
+      res.status(201).json(request)
+    } catch (error) {
+      if (error instanceof Error) {
+        res.status(500).send({ errors: [{ message: error.message }] });
+      }
+    }
+  },
+
+  approveRequest: async (req: Request, res: Response) => {
+    const { requestId } = req.params;
+    try {
+      const request = await RequestService.approveRequest(requestId)
+      res.status(201).json(request)
+    } catch (error) {
+      if (error instanceof Error) {
+        res.status(500).send({ errors: [{ message: error.message }] });
+      }
+    }
+  },
+
+  rejectRequest: async (req: Request, res: Response) => {
+    const { requestId } = req.params;
+    try {
+      const request = await RequestService.rejectRequest(requestId)
       res.status(201).json(request)
     } catch (error) {
       if (error instanceof Error) {

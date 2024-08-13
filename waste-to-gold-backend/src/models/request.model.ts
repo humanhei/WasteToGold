@@ -16,14 +16,13 @@ export const RequestModel = {
     },
     include
   }),
-  findByListingId: (listingId: string) => prisma.request.findFirst({
+  findByListingId: (listingId: string) => prisma.request.findMany({
     where: {
       listingId: listingId,
-    },
-    include
+    }
   }),
   create: (data: { unit: number, listingId: string, authorId: string }) => prisma.request.create({ data }),
-  update: (requestId: string, data: { unit: number, status: string, listingId: string, authorId: string }) => prisma.request.update({
+  update: (requestId: string, data: { unit?: number, status?: string, listingId?: string, authorId?: string }) => prisma.request.update({
     where: {
       id: requestId,
     },

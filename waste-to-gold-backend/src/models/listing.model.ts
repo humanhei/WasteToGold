@@ -10,6 +10,7 @@ export interface ListingCreateModel {
   description: string,
   free: boolean,
   price: number,
+  quantity?: number,
   authorId: string
 }
 
@@ -23,6 +24,7 @@ export interface ListingEditModel {
   description?: string,
   free?: boolean,
   price?: number,
+  quantity?: number,
   authorId?: string
 }
 
