@@ -5,6 +5,7 @@ const router = express.Router()
 
 router.get('/', UserController.getAllUsers)
 router.get('/get/:userId', UserController.getUserById)
+router.get('/getbyemail/:email', UserController.getUserByEmail)
 router.post('/check/username', UserController.checkUsername)
 router.post('/signup', UserController.signUpUser)
 router.post('/login', UserController.logInUser)
