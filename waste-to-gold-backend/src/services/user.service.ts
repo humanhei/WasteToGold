@@ -1,6 +1,7 @@
 import { AuthResponse } from '@supabase/supabase-js';
-import { UserModel, User } from '../models/user.model'
+import { UserModel } from '../models/user.model'
 import supabase from '../supabase'
+import { User } from '@prisma/client'
 
 export const UserService = {
   getAllUsers: async (): Promise<User[]> => {
@@ -82,7 +83,7 @@ export const UserService = {
     return user
   },
 
-  createUser: async (email: string, username: string, phone: number): Promise<User> => {
+  createUser: async (username: string, email?: string, phone?: number): Promise<User> => {
     const user = await UserModel.create({ email, username, phone })
     return user
   },

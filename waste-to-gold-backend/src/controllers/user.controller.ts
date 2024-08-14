@@ -90,7 +90,7 @@ export const UserController = {
   createUser: async (req: Request, res: Response) => {
     const { email, username, phone } = req.body
     try {
-      const user = await UserService.createUser(email, username, phone)
+      const user = await UserService.createUser(username, email, phone)
       res.status(201).json(user)
     } catch (error) {
       if (error instanceof Error) {

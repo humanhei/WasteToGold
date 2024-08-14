@@ -16,9 +16,9 @@ datasource db {
 // Define your models here
 model User {
   id          String  @id @default(uuid())
-  email       String  @unique
+  email       String?  @unique
   username    String @unique
-  phone       Int @unique
+  phone       Int? @unique
   listings    Listing[]
   wishList    Listing[] @relation("UserWishlist")
   followedBy  User[]    @relation("UserFollows")

@@ -2,9 +2,9 @@ import prisma from '../prisma'
 
 export interface User {
   id: string,
-  email: string,
+  email?: string,
   username: string,
-  phone: number,
+  phone?: number,
 }
 
 const include = {
@@ -35,5 +35,5 @@ export const UserModel = {
     where: { username },
     include
   }),
-  create: (data: { email: string; username: string, phone: number }) => prisma.user.create({ data }),
+  create: (data: { email?: string; username: string, phone?: number }) => prisma.user.create({ data }),
 }
