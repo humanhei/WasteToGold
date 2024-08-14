@@ -37,14 +37,14 @@ export const UserService = {
     }
   },
 
-  signUpUser: async (email: string, username: string, phone: number, password: string): Promise<User> => {
+  signUpUser: async (username: string, password: string, email?: string, phone?: number): Promise<User> => {
     const { error } = await supabase.auth.signUp({
-      email,
+      email: email || "",
       password
     })
 
     if (error) throw new Error(error.message)
-    const user = await UserModel.create({ email, username, phone })
+    const user = await UserModel.create({ email: email || "", username, phone: phone || 0 })
     return user
   },
 

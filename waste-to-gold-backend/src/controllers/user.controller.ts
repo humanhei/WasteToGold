@@ -56,7 +56,7 @@ export const UserController = {
   signUpUser: async (req: Request, res: Response) => {
     const { email, username, phone, password } = req.body
     try {
-      const result = await UserService.signUpUser(email, username, phone, password)
+      const result = await UserService.signUpUser(username, password, email, phone)
       res.status(201).json(result)
     } catch (error) {
       if (error instanceof Error) {
