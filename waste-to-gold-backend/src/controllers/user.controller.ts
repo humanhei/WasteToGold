@@ -65,6 +65,18 @@ export const UserController = {
     }
   },
 
+  verifyOTP: async (req: Request, res: Response) => {
+    const { email, phone, token } = req.body
+    try {
+      const result = await UserService.verifyOTP(token, email, phone)
+      res.status(201).json(result)
+    } catch (error) {
+      if (error instanceof Error) {
+        res.status(500).send({ errors: [{ message: error.message }] });
+      }
+    }
+  },
+
   createUser: async (req: Request, res: Response) => {
     const { email, username, phone } = req.body
     try {

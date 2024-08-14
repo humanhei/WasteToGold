@@ -48,6 +48,32 @@ export const UserService = {
     return user
   },
 
+  verifyOTP: async (token: string, email?: string, phone?: number): Promise<User | null> => {
+    let error;
+    let user;
+    if (email) {
+      ({ error } = await supabase.auth.verifyOtp({
+        email,
+        token,
+        type: 'signup'
+      }))
+      user = await UserModel.getUserByEmail(email)
+    } else if (phone) {
+      const phoneStr = `+852${phone}`;
+      ({ error } = await supabase.auth.verifyOtp({
+        phone: phoneStr,
+        token,
+        type: 'sms'
+      }))
+      user = await UserModel.getUserByPhone(phone)
+    } else {
+      throw new Error("Please enter either phone or email")
+    }
+
+    if (error) throw new Error(error.message)
+    return user
+  },
+
   createUser: async (email: string, username: string, phone: number): Promise<User> => {
     const user = await UserModel.create({ email, username, phone })
     return user
