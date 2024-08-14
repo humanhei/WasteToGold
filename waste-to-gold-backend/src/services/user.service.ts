@@ -19,6 +19,14 @@ export const UserService = {
     return UserModel.getUserByPhone(phone);
   },
 
+  checkUsername: async (username: string): Promise<boolean> => {
+    if(await UserModel.getUserByUsername(username)) {
+      return true;
+    } else {
+      return false;
+    }
+  },
+
   logInUser: async (email: string, username: string, phone: number, password: string): Promise<User|null> => {
     const modifiedPhone = `+852${Number(phone)}`;
     

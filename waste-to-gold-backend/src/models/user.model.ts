@@ -31,5 +31,9 @@ export const UserModel = {
     where: { phone },
     include
   }),
+  getUserByUsername: (username: string) => prisma.user.findFirst({
+    where: { username },
+    include
+  }),
   create: (data: { email: string; username: string, phone: number }) => prisma.user.create({ data }),
 }
