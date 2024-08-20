@@ -14,13 +14,13 @@ export const ReviewService = {
     return ReviewModel.findByListingId(listingId);
   },
 
-  createReview: async (review: string, rating: number, listingId: string, authorId: string): Promise<Review> => {
-    const reviewObj = await ReviewModel.create({ review, rating, listingId, authorId })
+  createReview: async (rating: string[], listingId: string, authorId: string, review?: string): Promise<Review> => {
+    const reviewObj = await ReviewModel.create({ rating, listingId, authorId, review,})
     return reviewObj
   },
 
-  updateReview: async (reviewId:string, review: string, rating: number, listingId: string, authorId: string): Promise<Review> => {
-    const reviewObj = await ReviewModel.update(reviewId, { review, rating, listingId, authorId })
+  updateReview: async (reviewId:string, rating: string[], listingId: string, authorId: string, review?: string, ): Promise<Review> => {
+    const reviewObj = await ReviewModel.update(reviewId, { rating, listingId, authorId, review})
     return reviewObj
   },
 

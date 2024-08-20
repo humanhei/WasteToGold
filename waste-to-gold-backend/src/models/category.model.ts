@@ -18,6 +18,15 @@ export const CategoryModel = {
       subCategories: true,
     }
   }),
+  findById: (id: string) => prisma.category.findFirst({
+    where: {
+      id
+    },
+    include: {
+      listings: true,
+      subCategories: true,
+    }
+  }),
   create: (data: { name_en: string, name_zh: string }) => prisma.category.create({ data }),
   update: (categoryId: string, data: { name_en: string, name_zh: string }) => prisma.category.update({
     where: {

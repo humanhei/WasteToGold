@@ -11,6 +11,16 @@ export const CategoryController = {
     }
   },
 
+  getCategoryById: async (req: Request, res: Response) => {
+    const { categoryId } = req.params
+    try {
+      const category = await CategoryService.getCategoryById(categoryId)
+      res.json(category)
+    } catch (error) {
+      res.status(500).json({ error: 'Failed to retrieve category' })
+    }
+  },
+
   createCategory: async (req: Request, res: Response) => {
     const { name_en, name_zh } = req.body
     try {

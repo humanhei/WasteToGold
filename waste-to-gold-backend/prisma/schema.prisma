@@ -87,7 +87,7 @@ model Request {
 
 model Review {
   id          String      @id @default(uuid())
-  rating      Int?
+  rating      String[]
   review      String?
   listing     Listing     @relation(fields: [listingId], references: [id])
   listingId   String

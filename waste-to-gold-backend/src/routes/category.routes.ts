@@ -4,6 +4,7 @@ import { CategoryController } from '../controllers/category.controller'
 const router = express.Router()
 
 router.get('/', CategoryController.getAllCategories)
+router.get('/:categoryId', CategoryController.getCategoryById)
 router.post('/', CategoryController.createCategory)
 router.post('/:categoryId', CategoryController.updateCategory)
 router.delete('/:categoryId', CategoryController.deleteCategory)

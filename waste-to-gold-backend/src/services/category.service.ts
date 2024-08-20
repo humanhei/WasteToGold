@@ -6,6 +6,10 @@ export const CategoryService = {
     return CategoryModel.findMany()
   },
 
+  getCategoryById: async (categoryId: string): Promise<Category|null> => {
+    return CategoryModel.findById(categoryId)
+  }, 
+
   createCategory: async (name_en: string, name_zh: string): Promise<Category> => {
     const category = await CategoryModel.create({ name_en, name_zh })
     return category
