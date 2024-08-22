@@ -52,6 +52,10 @@ export const ListingModel = {
     where: { id: listingId },
     include: listingIncludes
   }),
+  getManyListingsByIds: (idList: string[]) => prisma.listing.findMany({
+    where: { id: { in: idList } },
+    include: listingIncludes
+  }),
   delete: (listingId: string) => prisma.listing.delete({ where: { id: listingId }}),
   addWishlist: (listingId: string, userId: string) => prisma.listing.update({
     where: { id: listingId },

@@ -21,6 +21,17 @@ export const ListingController = {
     }
   },
 
+  getManyListingsByIds: async (req: Request, res: Response) => {
+    const { listingIds } = req.params
+    const idList = listingIds.split(',')
+    try {
+      const listings = await ListingService.getManyListingsByIds(idList)
+      res.json(listings)
+    } catch (error) {
+      res.status(500).json({ error: 'Failed to retrieve listing' })
+    }
+  },
+
   createListing: async (req: Request, res: Response) => {
     const { 
       sell,

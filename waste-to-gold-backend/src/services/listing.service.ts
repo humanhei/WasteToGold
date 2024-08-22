@@ -13,6 +13,10 @@ export const ListingService = {
     return ListingModel.getListingById(listingId)
   },
 
+  getManyListingsByIds: async (idList: string[]): Promise<Listing[]> => {
+    return ListingModel.getManyListingsByIds(idList)
+  },
+
   createListing: async (listingModel: ListingCreateModel): Promise<Listing> => {
     const listing = await ListingModel.create(listingModel)
     return listing
