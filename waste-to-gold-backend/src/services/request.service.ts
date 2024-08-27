@@ -17,7 +17,7 @@ export const RequestService = {
 
   createRequest: async (unit: number, listingId: string, authorId: string): Promise<Request> => {
     const listing = await ListingModel.getListingById(listingId);
-    if (listing?.quantity && listing?.quantity < unit) {
+    if (listing?.quantity == null || listing?.quantity < unit) {
       throw Error("Not enough Quantity for sell")
     }
     const requestObj = await RequestModel.create({ unit, listingId, authorId })
@@ -30,7 +30,7 @@ export const RequestService = {
     const listingObj = await ListingModel.getListingById(requestObj.listingId)
     const newListingObj = await ListingModel.update(listingObj?.id || "", {quantity: listingObj?.quantity || 0 - requestObj.unit})
     for (const request of requestList) {
-      if (newListingObj?.quantity && newListingObj .quantity < request.unit){
+      if (newListingObj?.quantity == null || newListingObj.quantity < request.unit){
         await RequestModel.update(request.id, { status: "REJECTED" })
       }
     }

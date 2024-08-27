@@ -15,19 +15,21 @@ datasource db {
 
 // Define your models here
 model User {
-  id          String  @id @default(uuid())
-  email       String?  @unique
-  username    String @unique
-  phone       Int? @unique
-  listings    Listing[]
-  wishList    Listing[] @relation("UserWishlist")
-  followedBy  User[]    @relation("UserFollows")
-  following   User[]    @relation("UserFollows")
-  reviews     Review[]
-  requests    Request[]
-  status      String     @default("ACTIVE")
-  createdAt   DateTime?  @default(now())
-  updateAt    DateTime?  @updatedAt
+  id                String    @id @default(uuid())
+  email             String?   @unique
+  username          String    @unique
+  phone             Int?      @unique
+  listings          Listing[]
+  wishList          Listing[] @relation("UserWishlist")
+  followedBy        User[]    @relation("UserFollows")
+  following         User[]    @relation("UserFollows")
+  reviews           Review[]
+  requests          Request[]
+  sentMessages      Message[] @relation("SentMessages")
+  receivedMessages  Message[] @relation("ReceivedMessages")
+  status            String    @default("ACTIVE")
+  createdAt         DateTime? @default(now())
+  updateAt          DateTime? @updatedAt
 }
 
 
@@ -61,6 +63,8 @@ model Listing {
   description String?
   free        Boolean     @default(false)
   price       Decimal?
+  lat         Decimal?
+  lon         Decimal?
   quantity    Int?
   requests    Request[]
   photos      Photo[]
@@ -106,7 +110,17 @@ model Photo {
   mimeType      String
   listing       Listing     @relation(fields: [listingId], references: [id])
   listingId     String
-  status        String     @default("ACTIVE")
+  status        String      @default("ACTIVE")
   createdAt     DateTime    @default(now())
   updatedAt     DateTime    @updatedAt
+}
+
+model Message {
+  id          String      @id @default(uuid())
+  content     String
+  timestamp   DateTime    @default(now())
+  fromUser    User        @relation("SentMessages", fields: [fromUserId], references: [id])
+  fromUserId  String
+  toUser      User        @relation("ReceivedMessages", fields: [toUserId], references: [id])
+  toUserId    String
 }
