@@ -34,7 +34,7 @@ export const ReviewController = {
   createReview: async (req: Request, res: Response) => {
     const { review, rating, listingId, authorId } = req.body
     try {
-      const reviewObj = await ReviewService.createReview(review, rating, listingId, authorId)
+      const reviewObj = await ReviewService.createReview(rating, listingId, authorId, review)
       res.status(201).json(reviewObj)
     } catch (error) {
       if (error instanceof Error) {
@@ -47,7 +47,7 @@ export const ReviewController = {
     const { reviewId } = req.params;
     const { review, rating, listingId, authorId } = req.body;
     try {
-      const reviewObj = await ReviewService.updateReview(reviewId, review, rating, listingId, authorId)
+      const reviewObj = await ReviewService.updateReview(reviewId, rating, listingId, authorId, review)
       res.status(201).json(reviewObj)
     } catch (error) {
       if (error instanceof Error) {
