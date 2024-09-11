@@ -22,4 +22,24 @@ export const MessageModel = {
     },
     orderBy: { timestamp: 'asc' },
   }),
+  findChatListByUserId: (userId: String) => prisma.$queryRaw`
+      SELECT DISTINCT
+        CASE
+          WHEN m."fromUserId" = ${userId} THEN m."toUserId"
+          ELSE m."fromUserId"
+        END AS "userId",
+        u.username,
+        u.email,
+        m."createdAt" as "lastMessageAt"
+      FROM "Message" m
+      JOIN "User" u ON (
+        CASE
+          WHEN m."fromUserId= ${userId} THEN m."toUserId = u.id
+          ELSE m."fromUserId" = u.id
+        END
+      )
+      WHERE m."fromUserId" = ${userId} OR m."toUserId" = ${userId}
+      ORDER BY m."createdAt" DESC
+      LIMIT 20
+    `,
 }

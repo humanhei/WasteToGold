@@ -16,7 +16,19 @@ export const MessageController = {
     const { user1Id, user2Id } = req.params
     try {
       const msgHistory = await MessageService.findChatHistory(user1Id, user2Id)
-      res.status(201).json(msgHistory)
+      res.status(200).json(msgHistory)
+    } catch (error) {
+        if (error instanceof Error) {
+            res.status(500).send({ errors: [{ message: error.message }] });
+        }
+    }
+  },
+
+  getChatListByUserId: async (req: Request, res: Response) => {
+    const { userId } = req.params
+    try {
+      const chatList = await MessageService.findChatListByUserId(userId)
+      res.status(200).json(chatList)
     } catch (error) {
         if (error instanceof Error) {
             res.status(500).send({ errors: [{ message: error.message }] });
