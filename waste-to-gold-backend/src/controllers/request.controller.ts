@@ -1,5 +1,8 @@
 import { Request, Response } from 'express'
 import { RequestService } from '../services/request.service'
+import { UserService } from '../services/user.service'
+import { UserWithIncludes } from '../models/user.model'
+
 
 export const RequestController = {
   getAllRequests: async (req: Request, res: Response) => {
@@ -23,11 +26,24 @@ export const RequestController = {
 
   getRequestsByListingId: async (req: Request, res: Response) => {
     try {
-      const { listingId } = req.params;
-      const request = await RequestService.getRequestsByListingId(listingId)
+      const { listingId } = req.params
+      const request = await RequestService.getRequestsByListingIdList([listingId])
       res.json(request)
     } catch (error) {
       res.status(500).json({ error: 'Failed to retrieve request' })
+    }
+  },
+
+  getRequestsByUserId: async (req: Request, res: Response) => {
+    try {
+      const { userId } = req.params
+      const user = await UserService.getUserById(userId)
+      const listings = user?.listings
+      const listingIdList = listings?.map((listing) => listing.id)
+      const requests = RequestService.getRequestsByListingIdList(listingIdList ?? []);
+      res.json(requests)
+    } catch (error) {
+      res.status(500).json({ error: 'Failed to retrieve requests by User Id' })
     }
   },
 

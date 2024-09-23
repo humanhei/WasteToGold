@@ -11,8 +11,8 @@ export const RequestService = {
     return RequestModel.findById(requestId);
   },
 
-  getRequestsByListingId: async (listingId: string): Promise<Request[]> => {
-    return RequestModel.findByListingId(listingId);
+  getRequestsByListingIdList: async (listingIdList: string[]): Promise<Request[]> => {
+    return RequestModel.findByListingIdList(listingIdList);
   },
 
   createRequest: async (unit: number, listingId: string, authorId: string): Promise<Request> => {
@@ -26,7 +26,7 @@ export const RequestService = {
 
   approveRequest: async (requestId:string): Promise<Request> => {
     const requestObj = await RequestModel.update(requestId, { status: "APPROVED" })
-    const requestList = await RequestModel.findByListingId(requestObj.listingId)
+    const requestList = await RequestModel.findByListingIdList([requestObj.listingId])
     const listingObj = await ListingModel.getListingById(requestObj.listingId)
     const newListingObj = await ListingModel.update(listingObj?.id || "", {quantity: listingObj?.quantity || 0 - requestObj.unit})
     for (const request of requestList) {

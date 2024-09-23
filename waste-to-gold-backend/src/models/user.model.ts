@@ -1,11 +1,5 @@
+import { Prisma } from '@prisma/client'
 import prisma from '../prisma'
-
-export interface User {
-  id: string,
-  email?: string,
-  username: string,
-  phone?: number,
-}
 
 const include = {
   'listings': true,
@@ -14,6 +8,17 @@ const include = {
   'reviews': true,
   'wishList': true
 }
+
+
+export type UserWithIncludes = Prisma.UserGetPayload<{
+  include: {
+    'listings': true,
+    'followedBy': true,
+    'following': true,
+    'reviews': true,
+    'wishList': true
+  }
+}>
 
 export const UserModel = {
   findMany: () => prisma.user.findMany({

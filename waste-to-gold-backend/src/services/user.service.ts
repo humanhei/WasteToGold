@@ -1,22 +1,22 @@
 import { AuthResponse } from '@supabase/supabase-js';
-import { UserModel } from '../models/user.model'
+import { UserModel, UserWithIncludes } from '../models/user.model'
 import supabase from '../supabase'
 import { User } from '@prisma/client'
 
 export const UserService = {
-  getAllUsers: async (): Promise<User[]> => {
+  getAllUsers: async (): Promise<UserWithIncludes[]> => {
     return UserModel.findMany()
   },
 
-  getUserById: async (userId: string): Promise<User|null> => {
+  getUserById: async (userId: string): Promise<UserWithIncludes|null> => {
     return UserModel.getUserById(userId);
   },
 
-  getUserByEmail: async (email: string): Promise<User|null> => {
+  getUserByEmail: async (email: string): Promise<UserWithIncludes|null> => {
     return UserModel.getUserByEmail(email);
   },
 
-  getUserByPhone: async (phone: number): Promise<User|null> => {
+  getUserByPhone: async (phone: number): Promise<UserWithIncludes|null> => {
     return UserModel.getUserByPhone(phone);
   },
 

@@ -42,6 +42,7 @@ export const ListingController = {
       brand,
       description,
       free,
+      quantity,
       price,
       authorId,
      } = req.body
@@ -55,6 +56,7 @@ export const ListingController = {
         brand,
         description,
         free,
+        quantity,
         price,
         authorId,
        })
@@ -78,6 +80,7 @@ export const ListingController = {
       description,
       free,
       price,
+      quantity,
       authorId,
      } = req.body;
     try {
@@ -91,6 +94,7 @@ export const ListingController = {
         description,
         free,
         price,
+        quantity,
         authorId,
        })
       res.status(201).json(listing)

@@ -34,7 +34,7 @@ export const MessageModel = {
       FROM "Message" m
       JOIN "User" u ON (
         CASE
-          WHEN m."fromUserId= ${userId} THEN m."toUserId = u.id
+          WHEN m."fromUserId" = ${userId} THEN m."toUserId" = u.id
           ELSE m."fromUserId" = u.id
         END
       )

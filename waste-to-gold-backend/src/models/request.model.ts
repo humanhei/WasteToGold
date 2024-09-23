@@ -16,9 +16,9 @@ export const RequestModel = {
     },
     include
   }),
-  findByListingId: (listingId: string) => prisma.request.findMany({
+  findByListingIdList: (listingIdList: string[]) => prisma.request.findMany({
     where: {
-      listingId: listingId,
+      listingId: { in: listingIdList},
     }
   }),
   create: (data: { unit: number, listingId: string, authorId: string }) => prisma.request.create({ data }),
