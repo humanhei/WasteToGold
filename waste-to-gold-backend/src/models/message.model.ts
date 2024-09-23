@@ -30,7 +30,7 @@ export const MessageModel = {
         END AS "userId",
         u.username,
         u.email,
-        m."createdAt" as "lastMessageAt"
+        m."timestamp" as "lastMessageAt"
       FROM "Message" m
       JOIN "User" u ON (
         CASE
@@ -39,7 +39,7 @@ export const MessageModel = {
         END
       )
       WHERE m."fromUserId" = ${userId} OR m."toUserId" = ${userId}
-      ORDER BY m."createdAt" DESC
+      ORDER BY m."timestamp" DESC
       LIMIT 20
     `,
 }
