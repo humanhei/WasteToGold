@@ -28,6 +28,13 @@ export const UserModel = {
     where: { id: userId },
     include
   }),
+  getUserChatById: (userId: string) => prisma.user.findFirst({
+    where: { id: userId },
+    include: {
+      sentMessages: true,
+      receivedMessages: true,
+    }
+  }),
   getUserByEmail: (email: string) => prisma.user.findFirst({
     where: { email },
     include
