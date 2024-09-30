@@ -123,6 +123,4 @@ model Message {
   fromUserId  String
   toUser      User        @relation("ReceivedMessages", fields: [toUserId], references: [id])
   toUserId    String
-  listing     Listing     @relation("Listing", fields: [listingId], references: [id])
-  listingId   String
 }
