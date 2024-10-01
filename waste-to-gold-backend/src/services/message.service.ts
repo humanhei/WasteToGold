@@ -1,4 +1,4 @@
-const { uniqBy } = require('lodash')
+const { concat, orderBy, uniqBy } = require('lodash')
 
 import { MessageModel } from '../models/message.model'
 import { Prisma, Message } from '@prisma/client'
@@ -32,11 +32,12 @@ export const MessageService = {
         timeStamp: msg.timestamp,
       }))
       const receivedChatList = user?.receivedMessages.map((msg) => ({
-        userId: msg.toUserId,
+        userId: msg.fromUserId,
         content: msg.content,
         timeStamp: msg.timestamp,
       }))
-      const chatList = uniqBy({ ...sentChatList, ...receivedChatList }, 'userId')
+      const fullChatList = orderBy(concat(sentChatList, receivedChatList), 'timeStamp', 'desc')
+      const chatList = uniqBy(fullChatList, 'userId')
       return chatList;
     } catch (error) {
       console.error('Error fetching chat history:', error);
