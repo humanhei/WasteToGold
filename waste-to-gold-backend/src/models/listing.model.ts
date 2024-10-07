@@ -57,7 +57,16 @@ export const ListingModel = {
       authorId: userId,
     },
     include: {
-      requests: true,
+      requests: {
+        include: {
+          listing: {
+            include: {
+              photos: true
+            }
+          },
+          author: true,
+        }
+      },
     }
   }),
   getManyListingsByIds: (idList: string[]) => prisma.listing.findMany({
