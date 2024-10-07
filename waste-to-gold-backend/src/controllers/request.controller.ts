@@ -1,3 +1,4 @@
+import { flatten } from 'lodash'
 import { Request, Response } from 'express'
 import { RequestService } from '../services/request.service'
 import { UserService } from '../services/user.service'
@@ -39,7 +40,7 @@ export const RequestController = {
     try {
       const { userId } = req.params
       const listings = await ListingService.getListingByAuthorId(userId)
-      const requests = listings.map((listing) => listing.requests)
+      const requests = flatten(listings.map((listing) => listing.requests))
       res.json(requests)
     } catch (error) {
       res.status(500).json({ error: 'Failed to retrieve requests by User Id' })
