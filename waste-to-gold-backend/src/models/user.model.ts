@@ -28,6 +28,10 @@ export const UserModel = {
     where: { id: userId },
     include
   }),
+  getUserByIdList: (userIdList: string[]) => prisma.user.findMany({
+    where: { id: { in: userIdList } },
+  }),
+  
   getUserChatById: (userId: string) => prisma.user.findFirst({
     where: { id: userId },
     include: {

@@ -2,7 +2,13 @@ import { ListingId } from 'aws-sdk/clients/datazone'
 import { ListingModel, ListingCreateModel, ListingEditModel } from '../models/listing.model'
 import * as photoModel from '../models/photo.model';
 import * as s3Service from '../services/s3.service';
-import { Listing, Prisma } from '@prisma/client'
+import { Listing, Request, Prisma } from '@prisma/client'
+
+interface listingRequestModel {
+  id: String,
+  requests: Request[],
+  authorId: string,
+}
 
 export const ListingService = {
   getAllListings: async (): Promise<Listing[]> => {
@@ -11,6 +17,10 @@ export const ListingService = {
 
   getListingById: async (listingId: string): Promise<Listing|null> => {
     return ListingModel.getListingById(listingId)
+  },
+
+  getListingByAuthorId: async (userId: string): Promise<listingRequestModel[]> => {
+    return ListingModel.getListingByAuthorId(userId)
   },
 
   getManyListingsByIds: async (idList: string[]): Promise<Listing[]> => {

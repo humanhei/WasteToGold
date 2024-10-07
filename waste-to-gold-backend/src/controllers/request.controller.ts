@@ -2,6 +2,7 @@ import { Request, Response } from 'express'
 import { RequestService } from '../services/request.service'
 import { UserService } from '../services/user.service'
 import { UserWithIncludes } from '../models/user.model'
+import { ListingService } from '../services/listing.service'
 
 
 export const RequestController = {
@@ -37,10 +38,8 @@ export const RequestController = {
   getRequestsByUserId: async (req: Request, res: Response) => {
     try {
       const { userId } = req.params
-      const user = await UserService.getUserById(userId)
-      const listings = user?.listings
-      const listingIdList = listings?.map((listing) => listing.id)
-      const requests = RequestService.getRequestsByListingIdList(listingIdList ?? []);
+      const listings = await ListingService.getListingByAuthorId(userId)
+      const requests = listings.map((listing) => listing.requests)
       res.json(requests)
     } catch (error) {
       res.status(500).json({ error: 'Failed to retrieve requests by User Id' })

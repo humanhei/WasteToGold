@@ -52,6 +52,14 @@ export const ListingModel = {
     where: { id: listingId },
     include: listingIncludes
   }),
+  getListingByAuthorId: (userId: string) => prisma.listing.findMany({
+    where: {
+      authorId: userId,
+    },
+    include: {
+      requests: true,
+    }
+  }),
   getManyListingsByIds: (idList: string[]) => prisma.listing.findMany({
     where: { id: { in: idList } },
     include: listingIncludes
