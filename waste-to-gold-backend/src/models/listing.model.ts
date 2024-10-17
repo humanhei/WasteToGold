@@ -13,6 +13,7 @@ export interface ListingCreateModel {
   quantity?: number,
   lon?: number,
   lat?: number,
+  location?: string,
   authorId: string
 }
 
@@ -28,6 +29,7 @@ export interface ListingEditModel {
   price?: number,
   lon?: number,
   lat?: number,
+  location?: string,
   quantity?: number,
   authorId?: string
 }
@@ -72,6 +74,10 @@ export const ListingModel = {
         }
       },
     }
+  }),
+  getRequestListing: (location: string) => prisma.listing.findMany({
+    where: { sell: false, location: location },
+    include: listingIncludes,
   }),
   getManyListingsByIds: (idList: string[]) => prisma.listing.findMany({
     where: { id: { in: idList } },

@@ -65,6 +65,7 @@ model Listing {
   price       Decimal?
   lat         Decimal?
   lon         Decimal?
+  location    String?
   quantity    Int?
   requests    Request[]
   photos      Photo[]

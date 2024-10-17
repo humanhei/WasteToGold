@@ -32,6 +32,16 @@ export const ListingController = {
     }
   },
 
+  getRequestListing: async (req: Request, res: Response) => {
+    const { location } = req.body
+    try {
+      const listings = await ListingService.getRequestListings(location)
+      res.json(listings)
+    } catch (error) {
+      res.status(500).json({ error: 'Failed to retrieve listings' })
+    }
+  },
+
   createListing: async (req: Request, res: Response) => {
     const { 
       sell,
@@ -44,6 +54,7 @@ export const ListingController = {
       free,
       lat,
       lon,
+      location,
       quantity,
       price,
       authorId,
@@ -60,6 +71,7 @@ export const ListingController = {
         free,
         lat,
         lon,
+        location,
         quantity,
         price,
         authorId,
@@ -86,6 +98,7 @@ export const ListingController = {
       price,
       lat,
       lon,
+      location,
       quantity,
       authorId,
      } = req.body;
@@ -102,6 +115,7 @@ export const ListingController = {
         price,
         lat,
         lon,
+        location,
         quantity,
         authorId,
        })
@@ -117,7 +131,7 @@ export const ListingController = {
     const { listingId } = req.params
     try {
       const listing = await ListingService.deleteListing(listingId)
-      res.status(201).json(listing)
+      res.json(listing)
     } catch (error) {
       if (error instanceof Error) {
         res.status(500).send({ errors: [{ message: error.message }] });
