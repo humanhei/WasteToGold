@@ -23,7 +23,8 @@ export const WishlistModel = {
   findByUserId: (userId: string) => prisma.wishlist.findFirst({
     where: {
       authorId: userId,
-    }
+    },
+    include
   }),
   create: (data: { title: string, authorId: string }) => prisma.wishlist.create({ data }),
   update: (wishlistId: string, data:{ title: string, authorId?: string }) => prisma.wishlist.update({
