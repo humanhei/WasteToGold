@@ -42,13 +42,13 @@ export const ListingService = {
     return listing
   },
 
-  addWishlist: async (listingId:string, userId: string): Promise<Listing> => {
-    const listing = await ListingModel.addWishlist(listingId, userId)
+  addWishlist: async (listingId:string, wishlistId: string): Promise<Listing> => {
+    const listing = await ListingModel.addWishlist(listingId, wishlistId)
     return listing
   },
 
-  removeWishlist: async (listingId:string, userId: string): Promise<Listing> => {
-    const listing = await ListingModel.removeWishlist(listingId, userId)
+  removeWishlist: async (listingId:string, wishlistId: string): Promise<Listing> => {
+    const listing = await ListingModel.removeWishlist(listingId, wishlistId)
     return listing
   },
 }

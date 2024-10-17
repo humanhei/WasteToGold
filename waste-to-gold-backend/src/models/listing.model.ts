@@ -11,6 +11,8 @@ export interface ListingCreateModel {
   free: boolean,
   price: number,
   quantity?: number,
+  lon?: number,
+  lat?: number,
   authorId: string
 }
 
@@ -24,6 +26,8 @@ export interface ListingEditModel {
   description?: string,
   free?: boolean,
   price?: number,
+  lon?: number,
+  lat?: number,
   quantity?: number,
   authorId?: string
 }
@@ -33,7 +37,7 @@ const listingIncludes = {
   author: true,
   photos: true,
   reviews: true,
-  wishList: true,
+  wishlists: true,
 }
 
 export const ListingModel = {
@@ -74,16 +78,16 @@ export const ListingModel = {
     include: listingIncludes
   }),
   delete: (listingId: string) => prisma.listing.delete({ where: { id: listingId }}),
-  addWishlist: (listingId: string, userId: string) => prisma.listing.update({
+  addWishlist: (listingId: string, wishlistId: string) => prisma.listing.update({
     where: { id: listingId },
     data: {
-      wishList: { connect: [{ id: userId }]}
+      wishlists: { connect: [{ id: wishlistId }]}
     }
   }),
-  removeWishlist: (listingId: string, userId: string) => prisma.listing.update({
+  removeWishlist: (listingId: string, wishlistId: string) => prisma.listing.update({
     where: { id: listingId },
     data: {
-      wishList: { disconnect: [{ id: userId }]}
+      wishlists: { disconnect: [{ id: wishlistId }]}
     }
   }),
 }

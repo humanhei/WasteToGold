@@ -20,11 +20,11 @@ model User {
   username          String    @unique
   phone             Int?      @unique
   listings          Listing[]
-  wishList          Listing[] @relation("UserWishlist")
   followedBy        User[]    @relation("UserFollows")
   following         User[]    @relation("UserFollows")
   reviews           Review[]
   requests          Request[]
+  wishlists         Wishlist[]
   sentMessages      Message[] @relation("SentMessages")
   receivedMessages  Message[] @relation("ReceivedMessages")
   status            String    @default("ACTIVE")
@@ -72,7 +72,7 @@ model Listing {
   status      String      @default("ACTIVE")
   createdAt   DateTime?   @default(now())
   updateAt    DateTime?   @updatedAt
-  wishList    User[]      @relation("UserWishlist")
+  wishlists    Wishlist[]  @relation("UserWishlist")
   author      User        @relation(fields: [authorId], references: [id])
   authorId    String
 }
@@ -123,4 +123,14 @@ model Message {
   fromUserId  String
   toUser      User        @relation("ReceivedMessages", fields: [toUserId], references: [id])
   toUserId    String
+}
+
+model Wishlist {
+  id          String      @id @default(uuid())
+  title       String      
+  listings    Listing[]   @relation("UserWishlist")
+  author      User        @relation(fields: [authorId], references: [id])
+  authorId    String
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
 }

@@ -7,8 +7,8 @@ router.get('/', ListingController.getAllListings)
 router.get('/:listingIds', ListingController.getManyListingsByIds)
 router.post('/', ListingController.createListing)
 router.post('/:listingId', ListingController.updateListing)
-router.post('/:listingId/addwishlist/:userId', ListingController.addWishlist)
-router.post('/:listingId/removewishlist/:userId', ListingController.removeWishlist)
+router.post('/:listingId/addwishlist/:wishlistId', ListingController.addWishlist)
+router.post('/:listingId/removewishlist/:wishlistId', ListingController.removeWishlist)
 router.delete('/:listingId', ListingController.deleteListing)
 
 export default router

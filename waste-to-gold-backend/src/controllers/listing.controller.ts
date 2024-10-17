@@ -42,6 +42,8 @@ export const ListingController = {
       brand,
       description,
       free,
+      lat,
+      lon,
       quantity,
       price,
       authorId,
@@ -56,6 +58,8 @@ export const ListingController = {
         brand,
         description,
         free,
+        lat,
+        lon,
         quantity,
         price,
         authorId,
@@ -80,6 +84,8 @@ export const ListingController = {
       description,
       free,
       price,
+      lat,
+      lon,
       quantity,
       authorId,
      } = req.body;
@@ -94,6 +100,8 @@ export const ListingController = {
         description,
         free,
         price,
+        lat,
+        lon,
         quantity,
         authorId,
        })
@@ -118,10 +126,10 @@ export const ListingController = {
   },
 
   addWishlist: async (req: Request, res: Response) => {
-    const { listingId, userId } = req.params
-    console.log(`Add Wishlist for User(${userId}) on Listing(${listingId})`)
+    const { listingId, wishlistId } = req.params
+    console.log(`Add Wishlist for Wishlist(${wishlistId}) on Listing(${listingId})`)
     try {
-      const listing = await ListingService.addWishlist(listingId, userId)
+      const listing = await ListingService.addWishlist(listingId, wishlistId)
       res.status(201).json(listing)
     } catch (error) {
       if (error instanceof Error) {
@@ -131,9 +139,9 @@ export const ListingController = {
   },
 
   removeWishlist: async (req: Request, res: Response) => {
-    const { listingId, userId } = req.params
+    const { listingId, wishlistId } = req.params
     try {
-      const listing = await ListingService.removeWishlist(listingId, userId)
+      const listing = await ListingService.removeWishlist(listingId, wishlistId)
       res.status(201).json(listing)
     } catch (error) {
       if (error instanceof Error) {

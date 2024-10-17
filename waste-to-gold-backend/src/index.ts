@@ -11,6 +11,7 @@ import photoRoutes from './routes/photo.routes'
 import reviewRoutes from './routes/review.routes'
 import requestRoutes from './routes/requests.routes'
 import messageRoutes from './routes/message.routes'
+import wishlistRoutes from './routes/wishlist.routes'
 import { MessageService } from './services/message.service';
 import { Socket } from 'socket.io';
 
@@ -36,6 +37,7 @@ app.use('/listings', listingRoutes)
 app.use('/reviews', reviewRoutes)
 app.use('/requests', requestRoutes)
 app.use('/message', messageRoutes)
+app.use('/wishlist', wishlistRoutes)
 
 const PORT = process.env.PORT || 3000
 
