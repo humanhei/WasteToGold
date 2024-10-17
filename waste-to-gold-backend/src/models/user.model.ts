@@ -5,8 +5,7 @@ const include = {
   'listings': true,
   'followedBy': true,
   'following': true,
-  'reviews': true,
-  'wishList': true
+  'reviews': true
 }
 
 
@@ -15,8 +14,7 @@ export type UserWithIncludes = Prisma.UserGetPayload<{
     'listings': true,
     'followedBy': true,
     'following': true,
-    'reviews': true,
-    'wishList': true
+    'reviews': true
   }
 }>
 
