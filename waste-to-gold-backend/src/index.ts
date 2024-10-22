@@ -2,6 +2,7 @@ import express from 'express'
 import dotenv from 'dotenv'
 import http from 'http';
 const socketIo = require('socket.io');
+const path = require('path')
 const { PrismaClient } = require('@prisma/client');
 import userRoutes from './routes/user.routes'
 import categoryRoutes from './routes/category.routes'
@@ -38,6 +39,7 @@ app.use('/reviews', reviewRoutes)
 app.use('/requests', requestRoutes)
 app.use('/message', messageRoutes)
 app.use('/wishlist', wishlistRoutes)
+app.use('/static', express.static(path.join(__dirname, 'public')))
 
 const PORT = process.env.PORT || 3000
 

@@ -1,6 +1,17 @@
 import { WishlistModel } from '../models/wishlist.model'
 import { Wishlist, Prisma } from '@prisma/client'
 
+type WishlistWithInclude = Prisma.WishlistGetPayload<{
+  include: {
+    listings: {
+      include: {
+          photos: true
+      }
+    },
+    author: true,
+  }
+}>
+
 export const WishlistService = {
   getAllWishlists: async (): Promise<Wishlist[]> => {
     return WishlistModel.findMany()
@@ -10,10 +21,10 @@ export const WishlistService = {
     return WishlistModel.findById(wishlistId)
   }, 
 
-  getWishlistByUserId: async (userId: string): Promise<Wishlist|null> => {
+  getWishlistByUserId: async (userId: string): Promise<WishlistWithInclude[]> => {
     return WishlistModel.findByUserId(userId)
   },
-
+ 
   createWishlist: async (title: string, authorId: string): Promise<Wishlist> => {
     const wishlist = await WishlistModel.create({ title, authorId })
     return wishlist

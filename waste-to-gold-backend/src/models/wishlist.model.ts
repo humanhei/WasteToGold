@@ -20,7 +20,7 @@ export const WishlistModel = {
     },
     include
   }),
-  findByUserId: (userId: string) => prisma.wishlist.findFirst({
+  findByUserId: (userId: string) => prisma.wishlist.findMany({
     where: {
       authorId: userId,
     },

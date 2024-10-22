@@ -33,7 +33,7 @@ export const ListingController = {
   },
 
   getRequestListing: async (req: Request, res: Response) => {
-    const { location } = req.body
+    const { location } = req.params
     try {
       const listings = await ListingService.getRequestListings(location)
       res.json(listings)

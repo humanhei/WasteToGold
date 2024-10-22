@@ -1,4 +1,3 @@
-import { ListingId } from 'aws-sdk/clients/datazone'
 import { ListingModel, ListingCreateModel, ListingEditModel } from '../models/listing.model'
 import * as photoModel from '../models/photo.model';
 import * as s3Service from '../services/s3.service';

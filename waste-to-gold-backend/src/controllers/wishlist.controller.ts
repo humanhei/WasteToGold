@@ -1,3 +1,5 @@
+const { flatten } = require('lodash')
+
 import { Request, Response } from 'express'
 import { WishlistService } from '../services/wishlist.service'
 
@@ -25,9 +27,11 @@ export const WishlistController = {
     const { userId } = req.params
     try {
       const wishlist = await WishlistService.getWishlistByUserId(userId)
-      res.json(wishlist)
+      const wishlistListings = wishlist.map((wish) => wish.listings).flat()
+      const likedListingIds = wishlistListings.map((listing) => listing.id)
+      res.json({ likedListingIds, wishlist})
     } catch (error) {
-      res.status(500).json({ error: 'Failed to retrieve wishlist' })
+      res.status(500).json({ error: 'Failed to retrieve wishlists' })
     }
   },
 
