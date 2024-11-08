@@ -48,6 +48,7 @@ model SubCategory {
   name_zh     String    @unique
   category    Category  @relation(fields: [categoryId], references: [id])
   categoryId  String
+  listings    Listing[]
   status      String     @default("ACTIVE")
 }
 
@@ -56,8 +57,10 @@ model Listing {
   sell        Boolean     @default(true)
   title_en    String?
   title_zh    String?
-  category    Category?   @relation(fields: [categoryId], references: [id])
+  category    Category?    @relation(fields: [categoryId], references: [id])
   categoryId  String?
+  subCategory SubCategory? @relation(fields: [subCategoryId], references: [id])
+  subCategoryId String?
   condition   String?
   brand       String?
   description String?

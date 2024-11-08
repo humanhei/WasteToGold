@@ -19,3 +19,12 @@ export async function uploadToS3(file: Express.Multer.File): Promise<S3.ManagedU
 
   return s3.upload(s3Params).promise();
 }
+
+export async function deleteObjS3(key: string): Promise<S3.DeletedObject> {
+  const s3Params: S3.DeleteObjectRequest = {
+    Bucket: process.env.S3_BUCKET_NAME!,
+    Key: key
+  };
+
+  return s3.deleteObject(s3Params).promise();
+}

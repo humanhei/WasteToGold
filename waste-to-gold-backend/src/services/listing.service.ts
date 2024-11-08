@@ -41,6 +41,11 @@ export const ListingService = {
   },
 
   deleteListing: async (listingId:string): Promise<Listing> => {
+    const photos = await photoModel.getAllPhotosByListingId(listingId);
+    for (const photo of photos){
+      const s3result = await s3Service.deleteObjS3(photo.fileName)
+      const photoResult = await photoModel.deletePhoto(photo.id) 
+    }
     const listing = await ListingModel.delete(listingId)
     return listing
   },
