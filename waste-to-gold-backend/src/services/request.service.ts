@@ -11,6 +11,10 @@ export const RequestService = {
     return RequestModel.findById(requestId);
   },
 
+  getRequestByRequesterId: async (userId: string): Promise<Request[]> => {
+    return RequestModel.findByRequesterId(userId);
+  },
+
   getRequestsByListingIdList: async (listingIdList: string[]): Promise<Request[]> => {
     return RequestModel.findByListingIdList(listingIdList);
   },

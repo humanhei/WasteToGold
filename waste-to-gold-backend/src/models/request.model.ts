@@ -2,7 +2,12 @@ import { Request } from '@prisma/client'
 import prisma from '../prisma'
 
 const include = {
-  listing: true,
+  listing: {
+    include: {
+      photos: true,
+      author: true
+    }
+  },
   author: true,
 }
 
@@ -13,6 +18,12 @@ export const RequestModel = {
   findById: (requestId: string) => prisma.request.findFirst({
     where: {
       id: requestId,
+    },
+    include
+  }),
+  findByRequesterId: (userId: string) => prisma.request.findMany({
+    where: {
+      authorId: userId
     },
     include
   }),

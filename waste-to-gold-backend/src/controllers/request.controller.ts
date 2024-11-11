@@ -36,6 +36,16 @@ export const RequestController = {
     }
   },
 
+  getRequestsByRequesterId: async (req: Request, res: Response) => {
+    try {
+      const { userId } = req.params
+      const requests = RequestService.getRequestByRequesterId(userId)
+      res.json(requests)
+    } catch (error) {
+      res.status(500).json({ error: 'Failed to retrieve requests by Requester Id' })
+    }
+  },
+
   getRequestsByUserId: async (req: Request, res: Response) => {
     try {
       const { userId } = req.params
