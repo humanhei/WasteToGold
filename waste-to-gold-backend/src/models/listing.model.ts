@@ -75,8 +75,8 @@ export const ListingModel = {
       },
     }
   }),
-  getRequestListing: (location: string) => prisma.listing.findMany({
-    where: { sell: false, location: location },
+  getRequestListing: (location: string, userId?: string) => prisma.listing.findMany({
+    where: { sell: false, location: location, authorId: { not: userId } },
     include: listingIncludes,
   }),
   getManyListingsByIds: (idList: string[]) => prisma.listing.findMany({

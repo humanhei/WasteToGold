@@ -33,9 +33,9 @@ export const ListingController = {
   },
 
   getRequestListing: async (req: Request, res: Response) => {
-    const { location } = req.params
+    const { location, userId } = req.params
     try {
-      const listings = await ListingService.getRequestListings(location)
+      const listings = await ListingService.getRequestListings(location, userId)
       res.json(listings)
     } catch (error) {
       res.status(500).json({ error: 'Failed to retrieve listings' })
