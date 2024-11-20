@@ -26,6 +26,10 @@ export const ListingService = {
     return ListingModel.getManyListingsByIds(idList)
   },
 
+  getAllRequestListings: async (userId?: string): Promise<Listing[]> => {
+    return ListingModel.getAllRequestListings(userId)
+  },
+
   getRequestListings: async (location: string, userId?: string): Promise<Listing[]> => {
     return ListingModel.getRequestListing(location, userId)
   },

@@ -13,6 +13,7 @@ import reviewRoutes from './routes/review.routes'
 import requestRoutes from './routes/requests.routes'
 import messageRoutes from './routes/message.routes'
 import wishlistRoutes from './routes/wishlist.routes'
+import broadcastRoutes from './routes/broadcast.routes'
 import { MessageService } from './services/message.service';
 import { Socket } from 'socket.io';
 
@@ -39,6 +40,7 @@ app.use('/reviews', reviewRoutes)
 app.use('/requests', requestRoutes)
 app.use('/message', messageRoutes)
 app.use('/wishlist', wishlistRoutes)
+app.use('/broadcast', broadcastRoutes)
 app.use('/static', express.static(path.join(__dirname, 'public')))
 
 const PORT = process.env.PORT || 3000
