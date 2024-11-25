@@ -63,6 +63,7 @@ export const ListingModel = {
       authorId: userId,
     },
     include: {
+      ...listingIncludes,
       requests: {
         include: {
           listing: {
