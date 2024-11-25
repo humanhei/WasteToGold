@@ -30,6 +30,10 @@ export const ListingService = {
     return ListingModel.getAllRequestListings(userId)
   },
 
+  getRequestListingByAuthorId: async (userId: string): Promise<Listing[]> => {
+    return ListingModel.getRequestListingByAuthorId(userId)
+  },
+
   getRequestListings: async (location: string, userId?: string): Promise<Listing[]> => {
     return ListingModel.getRequestListing(location, userId)
   },

@@ -12,6 +12,16 @@ export const BroadcastController = {
     }
   },
 
+  getRequestListingByAuthorId: async (req: Request, res: Response) => {
+    const { userId } = req.params
+    try {
+      const broadcasts = await ListingService.getRequestListingByAuthorId(userId)
+      res.json(broadcasts)
+    } catch (error) {
+      res.status(500).json({ error: 'Failed to retrieve broadcasts' })
+    }
+  },
+
   getBroadcastByLoc: async (req: Request, res: Response) => {
     const { location, userId } = req.params
     try {

@@ -80,6 +80,10 @@ export const ListingModel = {
     where: { sell: false, authorId: { not: userId } },
     include: listingIncludes,
   }),
+  getRequestListingByAuthorId: (userId: string) => prisma.listing.findMany({
+    where: { sell: false, authorId: userId },
+    include: listingIncludes,
+  }),
   getRequestListing: (location: string, userId?: string) => prisma.listing.findMany({
     where: { sell: false, location: location, authorId: { not: userId } },
     include: listingIncludes,
