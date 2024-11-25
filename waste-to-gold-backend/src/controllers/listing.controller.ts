@@ -11,6 +11,16 @@ export const ListingController = {
     }
   },
 
+  getListingByAuthorId: async (req: Request, res: Response) => {
+    const { userId } = req.params
+    try {
+      const listings = await ListingService.getListingByAuthorId(userId)
+      res.json(listings)
+    } catch (error) {
+      res.status(500).json({ error: 'Failed to retrieve listings' })
+    }
+  },
+
   getListingById: async (req: Request, res: Response) => {
     const { listingId } = req.params
     try {

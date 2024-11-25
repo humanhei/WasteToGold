@@ -4,6 +4,7 @@ import { ListingController } from '../controllers/listing.controller'
 const router = express.Router()
 
 router.get('/', ListingController.getAllListings)
+router.get('/getByUserId/:userId', ListingController.getListingByAuthorId)
 router.get('/getById/:listingIds', ListingController.getManyListingsByIds)
 router.get('/getReqByLoc/:location/user/:userId', ListingController.getRequestListing)
 router.post('/', ListingController.createListing)
