@@ -8,12 +8,19 @@ export const MessageService = {
   findChatHistory: async (user1Id: string, user2Id: string): Promise<Message[]> => {
     try {
       const messages = await MessageModel.findChatHistory(user1Id, user2Id);
+      const readMsgIdList = messages.map((msg) => {
+        if(msg.toUserId == user1Id){
+          return msg.id
+        }
+      }).filter(item => typeof item ==='string')
+      await MessageModel.readMsg(readMsgIdList)
       return messages.map(msg => ({
         id: msg.id,
         fromUserId: msg.fromUserId,
         fromUsername: msg.fromUser.username,
         toUserId: msg.toUserId,
         toUsername: msg.toUser.username,
+        read: msg.read,
         content: msg.content,
         timestamp: msg.timestamp,
       }));
@@ -27,13 +34,17 @@ export const MessageService = {
     try {
       const user = await UserModel.getUserChatById(userId);
       const sentChatList = user?.sentMessages.map((msg) => ({
+        id: msg.id,
         userId: msg.toUserId,
         content: msg.content,
+        read: msg.read,
         timeStamp: msg.timestamp,
       }))
       const receivedChatList = user?.receivedMessages.map((msg) => ({
+        id: msg.id,
         userId: msg.fromUserId,
         content: msg.content,
+        read: msg.read,
         timeStamp: msg.timestamp,
       }))
       const fullChatList = orderBy(concat(sentChatList, receivedChatList), 'timeStamp', 'desc')

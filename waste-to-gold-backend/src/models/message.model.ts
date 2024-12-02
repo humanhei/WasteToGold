@@ -9,6 +9,12 @@ export const MessageModel = {
       content: data.content,
     }
   }),
+  readMsg: (messageIdList: string[]) => prisma.message.updateMany({
+    where: { id: {in: messageIdList} },
+    data: {
+      read: true,
+    }
+  }),
   findChatHistory: (user1Id: string, user2Id: string) => prisma.message.findMany({
     where: {
       OR: [

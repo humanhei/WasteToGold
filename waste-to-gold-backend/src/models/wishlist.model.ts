@@ -4,7 +4,8 @@ import prisma from '../prisma'
 const include = {
   listings: {
     include: {
-        photos: true
+        photos: true,
+        author: true,
     }
   },
   author: true,

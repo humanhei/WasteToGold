@@ -122,6 +122,7 @@ model Photo {
 model Message {
   id          String      @id @default(uuid())
   content     String
+  read        Boolean     @default(false)
   timestamp   DateTime    @default(now())
   fromUser    User        @relation("SentMessages", fields: [fromUserId], references: [id])
   fromUserId  String
