@@ -7,13 +7,14 @@ import { UserModel } from '../models/user.model';
 export const MessageService = {
   findChatHistory: async (user1Id: string, user2Id: string): Promise<Message[]> => {
     try {
-      const messages = await MessageModel.findChatHistory(user1Id, user2Id);
-      const readMsgIdList = messages.map((msg) => {
+      const messagesOrg = await MessageModel.findChatHistory(user1Id, user2Id);
+      const readMsgIdList = messagesOrg.map((msg) => {
         if(msg.toUserId == user1Id){
           return msg.id
         }
       }).filter(item => typeof item ==='string')
       await MessageModel.readMsg(readMsgIdList)
+      const messages = await MessageModel.findChatHistory(user1Id, user2Id);
       return messages.map(msg => ({
         id: msg.id,
         fromUserId: msg.fromUserId,
