@@ -42,6 +42,18 @@ model Category {
   status        String     @default("ACTIVE")
 }
 
+model Carousel {
+  id            String      @id @default(uuid())
+  fileName      String
+  originalName  String
+  s3Url         String
+  mimeType      String
+  order         Int?
+  status        String      @default("ACTIVE")
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+}
+
 model SubCategory {
   id          String    @id @default(uuid())
   name_en     String    @unique

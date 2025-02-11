@@ -14,6 +14,7 @@ import requestRoutes from './routes/requests.routes'
 import messageRoutes from './routes/message.routes'
 import wishlistRoutes from './routes/wishlist.routes'
 import broadcastRoutes from './routes/broadcast.routes'
+import carouselRoutes from './routes/carousel.routes'
 import { MessageService } from './services/message.service';
 import { Socket } from 'socket.io';
 
@@ -34,6 +35,7 @@ app.use(express.json())
 app.use('/users', userRoutes)
 app.use('/categories', categoryRoutes)
 app.use('/subCategories', subCategoryRoutes)
+app.use('/carousels', carouselRoutes)
 app.use('/photos', photoRoutes)
 app.use('/listings', listingRoutes)
 app.use('/reviews', reviewRoutes)
