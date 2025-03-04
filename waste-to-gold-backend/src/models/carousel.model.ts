@@ -8,6 +8,7 @@ export interface carouselData {
   mimeType: string,
   listingId: string,
   status: string,
+  hyperlink?: string,
   order?: number,
 }
 
@@ -17,6 +18,7 @@ export interface carouselCreateData {
     s3Url: string,
     mimeType: string,
     status: string,
+    hyperlink?: string,
     order?: number,
 }
 

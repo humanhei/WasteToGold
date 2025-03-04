@@ -5,6 +5,7 @@ import * as s3Service from '../services/s3.service';
 export async function uploadCarousel(req: Request, res: Response) {
   try {
     const files = req.files as Array<Express.Multer.File>;
+    const { hyperlink } = req.params;
     const carousels = []
     
     for (const file of files) {
@@ -17,6 +18,7 @@ export async function uploadCarousel(req: Request, res: Response) {
         originalName: file.originalname,
         s3Url: s3Result.Location,
         mimeType: file.mimetype,
+        hyperlink,
         status: "ACTIVE",
       });
 
@@ -32,8 +34,8 @@ export async function uploadCarousel(req: Request, res: Response) {
 
 export async function getAllCarosels(req: Request, res: Response) {
   try {
-    const carousel = await carouselModel.getAllCarousels();
-    res.json(carousel);
+    const carousels = await carouselModel.getAllCarousels();
+    res.json(carousels);
   } catch (error) {
     console.error('Error fetching carousels:', error);
     res.status(500).json({ error: 'Failed to fetch carousels' });
@@ -42,9 +44,9 @@ export async function getAllCarosels(req: Request, res: Response) {
 
 export async function getCarouselById(req: Request, res: Response) {
   try {
-    const photo = await carouselModel.getCarouselById(req.params.id);
-    if (photo) {
-      res.json(photo);
+    const carousel = await carouselModel.getCarouselById(req.params.id);
+    if (carousel) {
+      res.json(carousel);
     } else {
       res.status(404).json({ error: 'Carousel not found' });
     }

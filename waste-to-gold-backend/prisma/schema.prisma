@@ -48,6 +48,7 @@ model Carousel {
   originalName  String
   s3Url         String
   mimeType      String
+  hyperlink     String?
   order         Int?
   status        String      @default("ACTIVE")
   createdAt     DateTime    @default(now())
