@@ -5,7 +5,7 @@ import * as carouselController from '../controllers/carousel.controller';
 const router = express.Router();
 const upload = multer({ storage: multer.memoryStorage() });
 
-router.post('/upload/:hyperlink', upload.array('photo'), carouselController.uploadCarousel);
+router.post('/upload', upload.array('photo'), carouselController.uploadCarousel);
 router.get('/', carouselController.getAllCarosels);
 router.get('/:id', carouselController.getCarouselById);
 router.post('/update/:id', carouselController.updateCarousel);
