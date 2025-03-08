@@ -5,7 +5,6 @@ import * as s3Service from '../services/s3.service';
 export async function uploadCarousel(req: Request, res: Response) {
   try {
     const files = req.files as Array<Express.Multer.File>;
-    const { hyperlink } = req.params;
     const carousels = []
     
     for (const file of files) {
@@ -18,7 +17,6 @@ export async function uploadCarousel(req: Request, res: Response) {
         originalName: file.originalname,
         s3Url: s3Result.Location,
         mimeType: file.mimetype,
-        hyperlink,
         status: "ACTIVE",
       });
 
