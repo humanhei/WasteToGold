@@ -31,6 +31,15 @@ export async function getAllCarousels() {
   return prisma.carousel.findMany({ where: { status: 'ACTIVE' } });
 }
 
+export async function updateCarousel(carouselId: string, data: { hyperlink: string }) {
+  return prisma.carousel.update({
+    where: {
+      id: carouselId,
+    },
+    data
+  });
+}
+
 export async function deleteCarousel(id: string) {
   return prisma.carousel.delete({ where: { id } });
 }

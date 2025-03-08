@@ -8,5 +8,7 @@ const upload = multer({ storage: multer.memoryStorage() });
 router.post('/upload/:hyperlink', upload.array('photo'), carouselController.uploadCarousel);
 router.get('/', carouselController.getAllCarosels);
 router.get('/:id', carouselController.getCarouselById);
+router.post('/:id', carouselController.updateCarousel);
+router.delete('/:id', carouselController.deleteCarousel);
 
 export default router;

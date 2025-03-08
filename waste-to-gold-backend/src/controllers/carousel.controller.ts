@@ -55,3 +55,28 @@ export async function getCarouselById(req: Request, res: Response) {
     res.status(500).json({ error: 'Failed to fetch photo' });
   }
 }
+
+export async function updateCarousel (req: Request, res: Response) {
+    const { id } = req.params;
+    const { hyperlink } = req.body;
+    try {
+      const carousel = await carouselModel.updateCarousel(id, { hyperlink } )
+      res.status(201).json(carousel)
+    } catch (error) {
+      if (error instanceof Error) {
+        res.status(500).send({ errors: [{ message: error.message }] });
+      }
+    }
+  }
+
+  export async function deleteCarousel (req: Request, res: Response) {
+    const { id } = req.params;
+    try {
+      const carousel = await carouselModel.deleteCarousel(id)
+      res.json(carousel)
+    } catch (error) {
+      if (error instanceof Error) {
+        res.status(500).send({ errors: [{ message: error.message }] });
+      }
+    }
+  }
