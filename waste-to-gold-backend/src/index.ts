@@ -1,7 +1,7 @@
 import express from 'express'
 import dotenv from 'dotenv'
 import http from 'http';
-const socketIo = require('socket.io');
+import { Server } from 'socket.io';
 const path = require('path')
 const { PrismaClient } = require('@prisma/client');
 import userRoutes from './routes/user.routes'
@@ -28,7 +28,7 @@ const prisma = new PrismaClient();
 
 const app = express()
 const server = http.createServer(app);
-const io = socketIo(server);
+
 
 app.use(express.json())
 // Routes
@@ -52,25 +52,52 @@ async function main() {
     await prisma.$connect();
     console.log('Connected to the database');
 
+    server.listen(PORT, () => {
+      console.log(`Server running on port ${PORT}`);
+    });
+
+    const io = new Server(server, {
+      cors: {
+        origin: '*', // this was localhost3000 when running locally
+        methods: ['GET', 'POST'],
+        },
+    });
+
     const connectedUsers = new Map<string, string>();
 
-    io.on('connection', (socket: Socket) => {
-      console.log('A user connected');
+    io.sockets.on('connection', (socket: Socket) => {
+      console.log(`A user connected: ${socket.id}`);
 
-      socket.on('register user', (userData: UserData) => {
+      socket.on("connect_error", (err) => {
+        // the reason of the error, for example "xhr poll error"
+        console.log(err.message);
+      
+        // some additional description, for example the status code of the initial HTTP response
+        console.log(err.description);
+      
+        // some additional context, for example the XMLHttpRequest object
+        console.log(err.context);
+      });
+
+      // Register online user to push real time message
+      socket.on('register', async (userData: UserData) => {
         connectedUsers.set(userData.id, socket.id);
         socket.data.userId = userData.id;
         socket.data.username = userData.username;
         console.log(`${userData.username} (ID: ${userData.id}) registered`);
       });
 
-      socket.on('private message', async ({ to, message }: { to: string; message: string }) => {
+      // Emit message event
+      socket.on('message', async ({ to, message }: { to: string; message: string }) => {
         try {
           if (socket.data.userId) {
+            // Save message in database
             await MessageService.sendMessage(socket.data.userId, to, message);
+            // Get recipient socket id
             const recipientSocket = connectedUsers.get(to);
+            // Send message to recipient
             if (recipientSocket) {
-              io.to(recipientSocket).emit('private message', {
+              io.to(recipientSocket).emit('message', {
                 from: socket.data.userId,
                 fromUsername: socket.data.username,
                 message: message
@@ -82,27 +109,12 @@ async function main() {
         }
       });
 
-      socket.on('get chat history', async ({ with: recipientId }: { with: string }) => {
-        try {
-          if (socket.data.userId) {
-            const history = await MessageService.findChatHistory(socket.data.userId, recipientId);
-            socket.emit('chat history', history);
-          }
-        } catch (error) {
-          console.error('Error fetching chat history:', error);
-        }
-      });
-
       socket.on('disconnect', () => {
         if (socket.data.userId) {
           connectedUsers.delete(socket.data.userId);
           console.log(`${socket.data.username} (ID: ${socket.data.userId}) disconnected`);
         }
       });
-    });
-
-    app.listen(PORT, () => {
-      console.log(`Server running on port ${PORT}`);
     });
   } catch (error) {
     console.error('Failed to connect to the database:', error);
